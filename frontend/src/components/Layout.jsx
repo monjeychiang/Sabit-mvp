@@ -1,5 +1,11 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { ThemeToggle } from './theme-toggle';
+import { GitHubStars } from './github-stars';
+import { Logo } from './ui/logo';
+import { MainNavigation } from './main-navigation';
+import { MobileNavigation } from './mobile-navigation';
+import { LoginButton } from './login-button';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -10,79 +16,44 @@ const Layout = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="bg-background border-b">
-        <div className="container mx-auto px-4 py-4">
+    <div className="min-h-screen flex flex-col w-full h-full">
+      <header className="bg-background border-b w-full sticky top-0 z-40">
+        <div className="w-full mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold mr-6">SABIT-LOCAL</h1>
-              <nav className="hidden md:flex space-x-4">
-                <Link 
-                  to="/" 
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${
-                    isActive('/') 
-                      ? 'bg-primary text-primary-foreground' 
-                      : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-                  }`}
-                >
-                  首頁
-                </Link>
-                <Link 
-                  to="/exchange-keys" 
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${
-                    isActive('/exchange-keys') 
-                      ? 'bg-primary text-primary-foreground' 
-                      : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-                  }`}
-                >
-                  API 密鑰管理
-                </Link>
-                <Link 
-                  to="/trading" 
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${
-                    isActive('/trading') 
-                      ? 'bg-primary text-primary-foreground' 
-                      : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-                  }`}
-                >
-                  交易操作
-                </Link>
-                <Link 
-                  to="/multiprocessing" 
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${
-                    isActive('/multiprocessing') 
-                      ? 'bg-primary text-primary-foreground' 
-                      : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-                  }`}
-                >
-                  多核心處理
-                </Link>
-                <Link 
-                  to="/components" 
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${
-                    isActive('/components') 
-                      ? 'bg-primary text-primary-foreground' 
-                      : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-                  }`}
-                >
-                  組件庫
-                </Link>
-              </nav>
+              <MobileNavigation />
+              <Link to="/" className="flex items-center">
+                <Logo 
+                  size="medium" 
+                  textClassName="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400"
+                />
+              </Link>
+              <div className="ml-6">
+                <MainNavigation />
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <LoginButton />
+              <GitHubStars username="monjeychiang" repo="Sabit-mvp" />
+              <ThemeToggle />
             </div>
           </div>
         </div>
       </header>
       
-      <main className="flex-grow">
+      <main className="flex-grow w-full">
         {children}
       </main>
       
-      <footer className="bg-background border-t py-6">
-        <div className="container mx-auto px-4">
+      <footer className="bg-background border-t py-6 w-full">
+        <div className="w-full mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} SABIT-LOCAL 本地加密貨幣自動化交易工具
-            </p>
+            <div className="flex items-center">
+              <Logo size="small" />
+              <p className="text-sm text-muted-foreground ml-2">
+                © {new Date().getFullYear()} 本地加密貨幣自動化交易工具
+              </p>
+            </div>
             <div className="flex space-x-4 mt-4 md:mt-0">
               <span className="text-sm text-muted-foreground">
                 本地運行 · 安全可靠 · 高效交易

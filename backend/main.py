@@ -4,6 +4,7 @@ import uvicorn
 from database import init_db
 from app.api.api import api_router
 import os
+from utils.initialize_db import initialize_database
 
 # 創建 FastAPI 應用
 app = FastAPI(
@@ -27,9 +28,9 @@ app.include_router(api_router, prefix="/api")
 # 啟動事件
 @app.on_event("startup")
 async def startup_event():
-    """應用啟動時初始化數據庫"""
-    await init_db()
-    print("數據庫初始化完成")
+    """應用啟動時初始化數據庫和用戶"""
+    await initialize_database()
+    print("數據庫和用戶初始化完成")
 
 # 根路由
 @app.get("/")

@@ -41,7 +41,7 @@ async def get_db():
 # 初始化數據庫
 async def init_db():
     """初始化數據庫"""
-    from models import exchange_keys  # 導入模型以創建表
+    from models import exchange_keys, user  # 導入模型以創建表
     
     async with engine.begin() as conn:
         # 創建所有表
