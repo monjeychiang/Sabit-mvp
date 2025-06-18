@@ -66,4 +66,4 @@ npx shadcn-ui@latest add button
 2. 將可重用邏輯抽取為自定義 Hooks
 3. 保持組件的單一職責
 4. 使用語義化的元素與清晰的命名
-5. 優先使用 Shadcn UI 組件，保持界面一致性 
+5. 只使用 Shadcn UI 組件，保持界面一致性 ,非允許禁止使用其他組件

@@ -1,22 +1,26 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import './Home.css'
+import logger from '../utils/logger'
 
 function Home() {
   const [apiStatus, setApiStatus] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  // 取得 API base url（從 .env 設定，預設為 http://localhost:8000）
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+
   useEffect(() => {
     const checkApiStatus = async () => {
       try {
         setLoading(true)
-        const response = await axios.get('/api/v1/health')
+        const response = await axios.get(`${API_BASE_URL}/api/v1/health`)
         setApiStatus(response.data)
         setError(null)
       } catch (err) {
         setError('無法連接到 API 服務')
-        console.error('API 連接錯誤:', err)
+        logger.error('API 連接錯誤:', err)
       } finally {
         setLoading(false)
       }

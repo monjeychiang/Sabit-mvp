@@ -38,7 +38,7 @@ class TaskManager:
     results = manager.map(process_item, items, factor=2)
     
     # 處理結果
-    print(f"處理完成，結果數量: {len(results)}")
+    logger.info(f"處理完成，結果數量: {len(results)}")
     ```
     """
     

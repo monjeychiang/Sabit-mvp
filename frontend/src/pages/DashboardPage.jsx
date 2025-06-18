@@ -18,7 +18,7 @@ const DashboardPage = () => {
             </h1>
           </div>
           <p className="max-w-[700px] text-gray-500 dark:text-gray-400 mb-8">
-            歡迎使用 SABIT-LOCAL 操作中心，您可以在這裡管理交易所 API 密鑰、設置交易策略、執行自動化交易等操作。
+            歡迎使用 SABIT 操作中心，您可以在這裡管理交易所 API 密鑰、設置交易策略、執行自動化交易等操作。
           </p>
         </div>
       </section>

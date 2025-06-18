@@ -10,7 +10,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import { BarChart3, BookOpen, ChevronDown, Cpu, Home, Key, Settings } from 'lucide-react';
+import { BarChart3, BookOpen, ChevronDown, Cpu, Home, Key, Settings, Wallet, LineChart } from 'lucide-react';
 
 export function MainNavigation() {
   const location = useLocation();
@@ -95,6 +95,18 @@ export function MainNavigation() {
               </li>
             </ul>
           </NavigationMenuContent>
+        </NavigationMenuItem>
+        
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild>
+            <Link to="/asset-management" className={cn(
+              navigationMenuTriggerStyle(),
+              isActive('/asset-management') ? 'bg-primary text-primary-foreground' : ''
+            )}>
+              <Wallet className="w-4 h-4 mr-2" />
+              資產管理
+            </Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
         
         <NavigationMenuItem>

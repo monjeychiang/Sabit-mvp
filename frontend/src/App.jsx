@@ -6,6 +6,7 @@ import ComponentTest from './pages/ComponentTest';
 import MultiProcessingTest from './pages/MultiProcessingTest';
 import ExchangeKeysPage from './pages/ExchangeKeysPage';
 import TradingPage from './pages/TradingPage';
+import AssetManagementPage from './pages/AssetManagementPage';
 import DashboardPage from './pages/DashboardPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -49,6 +50,11 @@ function App() {
               <Route path="/trading" element={
                 <ProtectedRoute>
                   <TradingPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/asset-management" element={
+                <ProtectedRoute>
+                  <AssetManagementPage />
                 </ProtectedRoute>
               } />
             </Routes>

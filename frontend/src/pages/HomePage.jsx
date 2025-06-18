@@ -34,14 +34,14 @@ const HomePage = () => {
               {showTitle ? (
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl animate-fade-in">
                   <Typewriter 
-                    text="SABIT-LOCAL" 
+                    text="SABIT" 
                     delay={80}
                     className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400"
                   />
                 </h1>
               ) : (
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl opacity-0">
-                  SABIT-LOCAL
+                  SABIT
                 </h1>
               )}
               
@@ -160,7 +160,7 @@ const HomePage = () => {
                 <DataFlow className="absolute inset-0" />
                 <div className="absolute inset-0 flex items-center justify-center backdrop-blur-sm bg-background/30 rounded-lg">
                   <p className="text-gray-500 dark:text-gray-400 p-4">
-                    SABIT-LOCAL 完全在本地運行，您的 API 密鑰和交易數據都經過加密存儲在本地數據庫中，不會上傳到任何外部服務器。
+                    SABIT 完全在本地運行，您的 API 密鑰和交易數據都經過加密存儲在本地數據庫中，不會上傳到任何外部服務器。
                   </p>
                 </div>
               </div>
@@ -191,7 +191,7 @@ const HomePage = () => {
             </span>
           </h2>
           <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400 mb-8">
-            添加您的交易所 API 密鑰，立即開始使用 SABIT-LOCAL 進行自動化交易
+            添加您的交易所 API 密鑰，立即開始使用 SABIT 進行自動化交易
           </p>
           <Link to="/dashboard">
             <Button size="lg" className="animate-pulse-glow">進入操作中心</Button>

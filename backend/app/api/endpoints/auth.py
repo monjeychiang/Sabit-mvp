@@ -1,12 +1,20 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import BaseModel
 from typing import Optional
 from database import get_db
 from services.auth_service import authenticate_user, create_user, get_user_by_username
+from services.exchange_service import ExchangeService
+from services.api_key_manager import ApiKeyManager
+from utils.crypto import CryptoManager
+import os
+import asyncio
 
 router = APIRouter()
+
+# 創建一個加密管理器實例
+crypto_manager = CryptoManager(os.environ.get("SABIT_MASTER_PASSWORD", "default_master_password"))
 
 # 定義響應模型
 class UserResponse(BaseModel):
@@ -35,11 +43,21 @@ def create_session_token(user_id: int) -> str:
     """生成簡單的會話令牌"""
     import hashlib
     import time
-    token = hashlib.sha256(f"{user_id}:{time.time()}:sabit-local-token".encode()).hexdigest()
+    token = hashlib.sha256(f"{user_id}:{time.time()}:SABIT-token".encode()).hexdigest()
     return token
 
+# 背景預熱所有交易所連線
+async def preheat_all_exchanges_background(db: AsyncSession):
+    """在背景執行預熱所有交易所連線的任務"""
+    # 創建 ApiKeyManager 實例
+    api_key_manager = ApiKeyManager(db, crypto_manager)
+    # 使用 ApiKeyManager 創建 ExchangeService
+    service = ExchangeService(api_key_manager)
+    await service.preheat_all_exchanges()
+    # 不再需要關閉連線，因為它們是持久的
+
 @router.post("/login", response_model=TokenResponse)
-async def login(request: LoginRequest, db: AsyncSession = Depends(get_db)):
+async def login(request: LoginRequest, background_tasks: BackgroundTasks, db: AsyncSession = Depends(get_db)):
     """用戶登入"""
     user = await authenticate_user(db, request.username, request.password)
     if not user:
@@ -51,6 +69,9 @@ async def login(request: LoginRequest, db: AsyncSession = Depends(get_db)):
     
     # 生成令牌
     access_token = create_session_token(user.id)
+    
+    # 在背景任務中預熱所有交易所連線
+    background_tasks.add_task(preheat_all_exchanges_background, db)
     
     return {
         "access_token": access_token,

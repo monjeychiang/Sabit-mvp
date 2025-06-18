@@ -42,7 +42,7 @@ export function Logo({
       />
       {withText && (
         <span className={`font-bold ${textClass} ${textClassName}`}>
-          SABIT-LOCAL
+          SABIT
         </span>
       )}
     </div>

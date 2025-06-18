@@ -11,7 +11,7 @@ def get_password_hash(password: str) -> str:
     """生成密碼雜湊值
     簡單實現，生產環境建議使用更安全的方法（如 bcrypt）
     """
-    salt = "sabit-local-salt"  # 固定鹽值，簡化實現
+    salt = "SABIT-salt"  # 固定鹽值，簡化實現
     return hashlib.sha256(f"{password}{salt}".encode()).hexdigest()
 
 async def authenticate_user(db: AsyncSession, username: str, password: str):

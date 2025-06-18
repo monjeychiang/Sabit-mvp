@@ -31,6 +31,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import axios from 'axios';
+import logger from '@/utils/logger';
 
 // 表單驗證架構
 const formSchema = z.object({
@@ -46,6 +47,9 @@ const ExchangeKeyForm = ({ onSuccess }) => {
   const [exchanges, setExchanges] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+
+  // 取得 API base url（從 .env 設定，預設為 http://localhost:8000）
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
   // 初始化表單
   const form = useForm({
@@ -64,10 +68,10 @@ const ExchangeKeyForm = ({ onSuccess }) => {
   useEffect(() => {
     const fetchExchanges = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/exchange/supported');
+        const response = await axios.get(`${API_BASE_URL}/api/exchange/supported`);
         setExchanges(response.data.exchanges || []);
       } catch (error) {
-        console.error('獲取交易所列表失敗:', error);
+        logger.error('獲取交易所列表失敗:', error);
         toast({
           title: "錯誤",
           description: "無法獲取支持的交易所列表",
@@ -77,13 +81,13 @@ const ExchangeKeyForm = ({ onSuccess }) => {
     };
 
     fetchExchanges();
-  }, [toast]);
+  }, [toast, API_BASE_URL]);
 
   // 提交表單
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
-      const response = await axios.post('http://localhost:8000/api/exchange/keys', data);
+      const response = await axios.post(`${API_BASE_URL}/api/exchange/keys`, data);
       toast({
         title: "成功",
         description: "交易所 API 密鑰已保存",
@@ -97,7 +101,7 @@ const ExchangeKeyForm = ({ onSuccess }) => {
         onSuccess(response.data);
       }
     } catch (error) {
-      console.error('保存 API 密鑰失敗:', error);
+      logger.error('保存 API 密鑰失敗:', error);
       toast({
         title: "錯誤",
         description: error.response?.data?.detail || "保存 API 密鑰失敗",

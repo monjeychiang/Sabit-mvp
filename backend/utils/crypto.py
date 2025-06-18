@@ -60,11 +60,22 @@ class CryptoManager:
         Returns:
             加密後的字符串
         """
+        if data is None:
+            return None
+            
         if not isinstance(data, str):
             raise TypeError("加密數據必須是字符串")
-            
-        encrypted = self.cipher.encrypt(data.encode())
-        return encrypted.decode()
+        
+        # 確保 API KEY 中的特殊字符被正確處理
+        try:    
+            encrypted = self.cipher.encrypt(data.encode('utf-8'))
+            return encrypted.decode('utf-8')
+        except Exception as e:
+            # 記錄加密錯誤，但不暴露具體訊息
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"加密數據時發生錯誤: {e}")
+            raise ValueError("加密數據時發生錯誤") from e
     
     def decrypt(self, encrypted_data):
         """
@@ -76,8 +87,19 @@ class CryptoManager:
         Returns:
             解密後的字符串
         """
+        if encrypted_data is None:
+            return None
+            
         if not isinstance(encrypted_data, str):
             raise TypeError("加密數據必須是字符串")
-            
-        decrypted = self.cipher.decrypt(encrypted_data.encode())
-        return decrypted.decode() 
+        
+        # 確保特殊字符正確處理
+        try:
+            decrypted = self.cipher.decrypt(encrypted_data.encode('utf-8'))
+            return decrypted.decode('utf-8')
+        except Exception as e:
+            # 記錄解密錯誤，但不暴露具體訊息
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"解密數據時發生錯誤: {e}")
+            raise ValueError("解密數據時發生錯誤") from e 

@@ -9,8 +9,8 @@ from pathlib import Path
 DB_DIR = Path("data")
 DB_DIR.mkdir(exist_ok=True)
 
-# 數據庫 URL
-SQLALCHEMY_DATABASE_URL = f"sqlite+aiosqlite:///{DB_DIR}/sabit_local.db"
+# 從環境變數取得資料庫連線字串，預設為 SQLite
+SQLALCHEMY_DATABASE_URL = os.environ.get("DATABASE_URL", f"sqlite+aiosqlite:///{DB_DIR}/sabit_local.db")
 
 # 創建異步引擎
 engine = create_async_engine(
