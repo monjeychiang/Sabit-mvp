@@ -1,0 +1,70 @@
+# 依賴庫
+node_modules/
+__pycache__/
+**/__pycache__/
+**/*.pyc
+venv/
+env/
+.env
+
+# 編譯和構建文件
+*.pyc
+*.pyo
+*.pyd
+dist/
+build/
+*.egg-info/
+.coverage
+.pytest_cache/
+.tox/
+
+# 日誌和臨時文件
+*.log
+*.tmp
+logs/
+temp/
+
+# 本地開發和IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 系統文件
+.DS_Store
+Thumbs.db
+
+# 前端打包文件
+frontend/build/
+frontend/dist/
+
+# 前端快取和依賴
+frontend/node_modules/
+frontend/node_modules/.vite/
+frontend/node_modules/.package-lock.json
+
+# 資料庫文件
+*.db
+*.sqlite
+*.sqlite3
+backend/data/*.db
+
+# 快取文件
+.cache/
+.parcel-cache/
+.npm/
+.yarn/
+
+# 環境變數檔案（保留範例檔案）
+# 但不包括 .env.example
+.env.*
+!.env.example
+
+# 其他
+.coverage
+htmlcov/
+coverage/
+.nyc_output/
+
+# 舊版資源
+logo_square_package/ 
