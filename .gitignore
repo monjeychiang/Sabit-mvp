@@ -49,6 +49,13 @@ frontend/node_modules/.package-lock.json
 *.sqlite3
 backend/data/*.db
 
+# 配置和安全檔案
+backend/config/salt.key
+*.key
+*.pem
+*.crt
+*.cer
+
 # 快取文件
 .cache/
 .parcel-cache/
