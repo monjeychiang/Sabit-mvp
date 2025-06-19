@@ -1,18 +1,31 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useApiStatus } from "../hooks/useApiStatus";
 
-// 創建主題上下文
+// 創建主題上下文，包含 API 狀態
 const ThemeProviderContext = createContext({
   theme: "system",
   setTheme: () => null,
+  apiStatus: 'loading',
+  lastChecked: null,
+  checkApiStatus: () => null
 });
 
 // 主題提供器組件
-export function ThemeProvider({ children, defaultTheme = "system", storageKey = "sabit-ui-theme" }) {
+export function ThemeProvider({ 
+  children, 
+  defaultTheme = "system", 
+  storageKey = "sabit-ui-theme",
+  apiCheckInterval = 30000
+}) {
+  // 主題狀態
   const [theme, setTheme] = useState(() => {
     // 嘗試從本地存儲中獲取主題設置
     const storedTheme = localStorage.getItem(storageKey);
     return storedTheme || defaultTheme;
   });
+
+  // 獲取 API 狀態
+  const apiStatusData = useApiStatus(apiCheckInterval);
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -50,9 +63,11 @@ export function ThemeProvider({ children, defaultTheme = "system", storageKey = 
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, [theme]);
 
+  // 合併主題和 API 狀態
   const value = {
     theme,
     setTheme: (newTheme) => setTheme(newTheme),
+    ...apiStatusData
   };
 
   return (
@@ -62,7 +77,7 @@ export function ThemeProvider({ children, defaultTheme = "system", storageKey = 
   );
 }
 
-// 自定義 Hook，用於在組件中訪問主題
+// 自定義 Hook，用於在組件中訪問主題和 API 狀態
 export const useTheme = () => {
   const context = useContext(ThemeProviderContext);
   if (context === undefined) {

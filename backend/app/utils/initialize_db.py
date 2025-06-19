@@ -5,9 +5,9 @@ import asyncio
 import logging
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from database import get_db, init_db
-from models.user import User
-from services.auth_service import create_user
+from app.db.database import get_db, init_db
+from app.db.models.user import User
+from app.services.auth_service import create_user
 
 async def initialize_users():
     """初始化默認用戶"""

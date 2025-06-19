@@ -1,5 +1,41 @@
 # 變更紀錄
 
+## 2023-11-14: 重構資料庫和模型結構，符合 FastAPI 最佳實踐
+
+### 變更概述
+重構了專案的資料庫和模型結構，將模型從根目錄的 `models/` 移至 `app/db/models/` 目錄，使其符合 FastAPI 的最佳實踐結構。
+
+### 技術實現
+1. 資料庫結構調整：
+   - 將 `database.py` 從根目錄移至 `app/db/database.py`
+   - 將 `models/` 目錄下的模型移至 `app/db/models/`
+   - 刪除不再需要的 `app/models/` 目錄
+
+2. 導入路徑更新：
+   - 更新所有相關文件中的導入路徑，使用新的模型位置
+   - 統一使用 `app.db.models` 命名空間導入模型
+   - 統一使用 `app.db.database` 導入資料庫功能
+
+3. 模型整合：
+   - 確保所有模型都使用 `app.db.base_class.Base` 作為基類
+   - 更新 `app.db.base.py` 文件，導入所有模型以便 Alembic 遷移
+
+### 檔案變更
+- 新增 `app/db/models/` 目錄，包含所有數據模型
+- 新增 `app/db/database.py`，整合原有 `database.py` 功能
+- 更新 `main.py`、`services/auth_service.py`、`services/api_key_manager.py` 等文件的導入路徑
+- 更新 `app/api/endpoints/exchange.py` 和 `app/api/endpoints/auth.py` 的導入路徑
+- 刪除舊的 `models/` 目錄和 `database.py` 文件
+
+### 效能影響
+- 無直接效能影響，但提高了代碼結構的一致性
+- 使專案結構更符合 FastAPI 的最佳實踐，便於後續擴展
+
+### 維護性改進
+- 更清晰的模組化結構，使代碼更易於維護
+- 統一的導入路徑，減少混淆
+- 符合 FastAPI 的標準專案結構，便於新開發者理解
+
 ## 2023-11-13: 優化時間同步機制，支持台北時區和優先服務
 
 ### 變更概述

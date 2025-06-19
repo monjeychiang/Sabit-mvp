@@ -26,8 +26,8 @@ SessionLocal = sessionmaker(
     class_=AsyncSession
 )
 
-# 創建基類
-Base = declarative_base()
+# 創建基類 - 使用 app/db/base_class.py 中的 Base
+from app.db.base_class import Base
 
 # 獲取數據庫會話
 async def get_db():
@@ -41,7 +41,8 @@ async def get_db():
 # 初始化數據庫
 async def init_db():
     """初始化數據庫"""
-    from models import exchange_keys, user  # 導入模型以創建表
+    # 導入模型以創建表
+    from app.db.models import user, exchange_keys
     
     async with engine.begin() as conn:
         # 創建所有表

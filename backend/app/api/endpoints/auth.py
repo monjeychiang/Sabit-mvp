@@ -3,11 +3,11 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import BaseModel
 from typing import Optional
-from database import get_db
-from services.auth_service import authenticate_user, create_user, get_user_by_username
-from services.exchange_service import ExchangeService
-from services.api_key_manager import ApiKeyManager
-from utils.crypto import CryptoManager
+from app.db.database import get_db
+from app.services.auth_service import authenticate_user, create_user, get_user_by_username
+from app.services.exchange_service import ExchangeService
+from app.services.api_key_manager import ApiKeyManager
+from app.utils.crypto import CryptoManager
 import os
 import asyncio
 
@@ -102,7 +102,7 @@ async def get_current_user(token: str, db: AsyncSession = Depends(get_db)):
     # 在這個簡化版本中，我們直接返回第一個用戶
     # 實際應用中，應該解析令牌獲取用戶ID，然後從數據庫獲取用戶
     from sqlalchemy.future import select
-    from models.user import User
+    from app.db.models.user import User
     
     query = select(User).limit(1)
     result = await db.execute(query)

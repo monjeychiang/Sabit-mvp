@@ -47,11 +47,11 @@ const HomePage = () => {
               
               {showSubtitle ? (
                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400 animate-fade-in">
-                  本地加密貨幣自動化交易工具，安全、高效、易用
+                 加密貨幣自動化交易工具，安全、高效、易用
                 </p>
               ) : (
                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400 opacity-0">
-                  本地加密貨幣自動化交易工具，安全、高效、易用
+                 加密貨幣自動化交易工具，安全、高效、易用
                 </p>
               )}
             </div>

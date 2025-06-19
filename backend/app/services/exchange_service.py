@@ -2,9 +2,9 @@ import ccxt
 import ccxt.async_support as ccxt_async
 import asyncio
 from sqlalchemy.ext.asyncio import AsyncSession
-from services.api_key_manager import ApiKeyManager
-from utils.crypto import CryptoManager
-from utils.time_sync import time_sync
+from app.services.api_key_manager import ApiKeyManager
+from app.utils.crypto import CryptoManager
+from app.utils.time_sync import time_sync
 from typing import Dict, List, Any, Optional, Union
 import logging
 import time

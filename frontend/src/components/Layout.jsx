@@ -7,6 +7,9 @@ import { MainNavigation } from './main-navigation';
 import { MobileNavigation } from './mobile-navigation';
 import { LoginButton } from './login-button';
 
+// 導入頁腳 API 狀態指示器
+import { ApiStatusFooter } from './ui/api-status-footer';
+
 const Layout = ({ children }) => {
   const location = useLocation();
   
@@ -51,13 +54,20 @@ const Layout = ({ children }) => {
             <div className="flex items-center">
               <Logo size="small" />
               <p className="text-sm text-muted-foreground ml-2">
-                © {new Date().getFullYear()} 本地加密貨幣自動化交易工具
+                © {new Date().getFullYear()}加密貨幣自動化交易工具
               </p>
             </div>
-            <div className="flex space-x-4 mt-4 md:mt-0">
-              <span className="text-sm text-muted-foreground">
-                本地運行 · 安全可靠 · 高效交易
-              </span>
+            <div className="flex flex-col items-end mt-4 md:mt-0">
+              <div className="flex space-x-4">
+                <span className="text-sm text-muted-foreground">
+                  本地運行 · 安全可靠 · 高效交易
+                </span>
+              </div>
+              
+              {/* 頁腳狀態指示器 */}
+              <div className="mt-2">
+                <ApiStatusFooter />
+              </div>
             </div>
           </div>
         </div>

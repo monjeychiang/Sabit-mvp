@@ -1,5 +1,25 @@
 # 專案變更紀錄
 
+## [0.7.0] - 2025-07-29
+### 架構重構
+- 重構專案目錄結構，提升代碼組織與可維護性
+- 優化模組化設計，確保更好的擴展性
+
+### 後端
+- 創建 `app/db/models` 目錄，將數據模型從根目錄移至此處
+- 創建 `app/services` 目錄，整合所有服務模組
+- 創建 `app/utils` 目錄，整合所有工具函數
+- 更新所有相關導入路徑，確保代碼正確引用
+- 刪除舊的目錄結構（`models`、`services`、`utils`），保持代碼庫整潔
+
+### 技術細節
+- 將 `User` 和 `ExchangeKey` 模型移至 `app/db/models` 目錄
+- 將 `auth_service.py` 和 `api_key_manager.py` 移至 `app/services` 目錄
+- 將 `crypto.py`、`time_sync.py` 和 `initialize_db.py` 移至 `app/utils` 目錄
+- 更新所有模組的導入路徑，使用 `app.` 前綴
+- 確保所有文件包含完整的中文註解和文檔字符串
+- 徹底清理原有的檔案和目錄，避免重複代碼和混淆
+
 ## [0.6.2] - 2025-07-28
 ### 錯誤修復
 - 修復 OKX API KEY 加密解密過程中的錯誤

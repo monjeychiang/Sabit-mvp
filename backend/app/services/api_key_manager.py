@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from models.exchange_keys import ExchangeKey
-from utils.crypto import CryptoManager
+from app.db.models.exchange_keys import ExchangeKey
+from app.utils.crypto import CryptoManager
 from typing import List, Optional, Dict, Any
 import logging
 

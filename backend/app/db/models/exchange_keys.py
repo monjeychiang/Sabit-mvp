@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text
 from sqlalchemy.sql import func
-from database import Base
+from app.db.base_class import Base
 
 class ExchangeKey(Base):
     """交易所 API 密鑰模型"""

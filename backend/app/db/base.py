@@ -2,5 +2,8 @@
 # 這個文件主要用於 Alembic 的自動遷移功能
 
 from app.db.base_class import Base  # noqa
+# 在此處匯入所有模型
+from app.db.models.user import User  # noqa
+from app.db.models.exchange_keys import ExchangeKey  # noqa
 # 在此處匯入所有模型，例如:
 # from app.models.user import User  # noqa 

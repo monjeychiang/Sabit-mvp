@@ -2,11 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException, status, Body, BackgroundT
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List, Dict, Optional, Any
 from pydantic import BaseModel, Field
-from database import get_db
-from models.exchange_keys import ExchangeKey
-from services.exchange_service import ExchangeService
-from services.api_key_manager import ApiKeyManager
-from utils.crypto import CryptoManager
+from app.db.database import get_db
+from app.db.models.exchange_keys import ExchangeKey
+from app.services.exchange_service import ExchangeService
+from app.services.api_key_manager import ApiKeyManager
+from app.utils.crypto import CryptoManager
 import os
 import ccxt
 import logging

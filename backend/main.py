@@ -1,12 +1,11 @@
 from fastapi import FastAPI, Depends
-from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-from database import init_db
+from app.db.database import init_db
 from app.api.api import api_router
 import os
-from utils.initialize_db import initialize_database
-from utils.time_sync import sync_time_on_startup, time_sync
+from app.utils.initialize_db import initialize_database
+from app.utils.time_sync import sync_time_on_startup, time_sync
 import datetime
 import pytz
 import logging
