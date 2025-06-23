@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, Outlet } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Loader2 } from 'lucide-react';
 
@@ -24,5 +24,6 @@ export function ProtectedRoute({ children }) {
   }
   
   // 已認證，顯示受保護的內容
-  return children;
+  // 如果有 children 則渲染 children，否則渲染 Outlet
+  return children || <Outlet />;
 } 

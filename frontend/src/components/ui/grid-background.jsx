@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from 'react';
+import { useTheme } from '../../components/theme-provider';
 
 const GridBackground = ({ className }) => {
   const canvasRef = useRef(null);
+  const { theme } = useTheme();
   
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -34,7 +36,16 @@ const GridBackground = ({ className }) => {
     
     // 繪製網格
     const drawGrid = () => {
-      ctx.strokeStyle = 'rgba(var(--grid-color), 0.1)';
+      // 根據主題調整網格線透明度和顏色
+      const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      
+      // 深色模式下使用更高的透明度和更亮的顏色
+      if (isDark) {
+        ctx.strokeStyle = 'rgba(180, 180, 255, 0.15)'; // 淺藍色，更高透明度
+      } else {
+        ctx.strokeStyle = 'rgba(var(--grid-color), 0.1)';
+      }
+      
       ctx.lineWidth = 1;
       
       const gridSize = 30;
@@ -60,7 +71,14 @@ const GridBackground = ({ className }) => {
     
     // 繪製粒子
     const drawParticles = () => {
-      ctx.fillStyle = 'rgba(var(--grid-color), 0.5)';
+      // 根據主題調整粒子顏色
+      const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      
+      if (isDark) {
+        ctx.fillStyle = 'rgba(180, 180, 255, 0.6)'; // 淺藍色粒子，更高透明度
+      } else {
+        ctx.fillStyle = 'rgba(var(--grid-color), 0.5)';
+      }
       
       particles.forEach(particle => {
         ctx.beginPath();
@@ -71,7 +89,15 @@ const GridBackground = ({ className }) => {
     
     // 繪製連接線
     const drawConnections = () => {
-      ctx.strokeStyle = 'rgba(var(--grid-color), 0.15)';
+      // 根據主題調整連接線顏色
+      const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      
+      if (isDark) {
+        ctx.strokeStyle = 'rgba(180, 180, 255, 0.2)'; // 淺藍色連接線，更高透明度
+      } else {
+        ctx.strokeStyle = 'rgba(var(--grid-color), 0.15)';
+      }
+      
       ctx.lineWidth = 0.5;
       
       const maxDistance = 150;
@@ -133,7 +159,7 @@ const GridBackground = ({ className }) => {
       window.removeEventListener('resize', resizeCanvas);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [theme]); // 添加 theme 作為依賴，當主題變化時重新渲染
   
   return (
     <canvas
@@ -141,7 +167,7 @@ const GridBackground = ({ className }) => {
       className={`fixed top-0 left-0 -z-10 w-full h-full ${className}`}
       style={{ 
         '--grid-color': 'var(--foreground)',
-        opacity: 0.4
+        opacity: theme === 'dark' ? 0.6 : 0.4 // 深色模式下提高整體不透明度
       }}
     />
   );

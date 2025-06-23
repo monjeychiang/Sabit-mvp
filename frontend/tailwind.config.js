@@ -6,6 +6,31 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    fontFamily: {
+      // 添加推薦的免費字體
+      sans: [
+        '"Noto Sans TC"', // 優秀的中文支援
+        '"Source Han Sans TC"', // 思源黑體
+        '"PingFang TC"', // 蘋方
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif'
+      ],
+      serif: [
+        '"Noto Serif TC"', // 優秀的中文襯線字體
+        '"Source Han Serif TC"', // 思源宋體
+        'Georgia', 
+        'serif'
+      ],
+      mono: [
+        '"JetBrains Mono"', // 優秀的程式碼字體
+        '"Source Code Pro"',
+        'Menlo',
+        'Monaco',
+        'Consolas',
+        'monospace'
+      ],
+    },
   	container: {
   		center: true,
   		padding: '2rem',
@@ -111,6 +136,18 @@ export default {
         'scale-in': {
           '0%': { transform: 'scale(0.9)', opacity: 0 },
           '100%': { transform: 'scale(1)', opacity: 1 }
+        },
+        'pulse': {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.5 }
+        },
+        'shimmer': {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' }
+        },
+        'spin-slow': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' }
         }
   		},
   		animation: {
@@ -122,7 +159,10 @@ export default {
         'slide-in-right': 'slide-in-right 0.5s ease-out',
         'slide-in-left': 'slide-in-left 0.5s ease-out',
         'fade-in': 'fade-in 0.5s ease-out',
-        'scale-in': 'scale-in 0.5s ease-out'
+        'scale-in': 'scale-in 0.5s ease-out',
+        'pulse': 'pulse 1.5s ease-in-out infinite',
+        'shimmer': 'shimmer 2s linear infinite',
+        'spin-slow': 'spin-slow 6s linear infinite'
   		}
   	}
   },

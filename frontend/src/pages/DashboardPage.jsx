@@ -27,7 +27,7 @@ const DashboardPage = () => {
         <div className="w-full px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-3 lg:gap-12">
             <div className="animate-scale-in" style={{ animationDelay: '0ms' }}>
-              <TechCard glowColor="rgba(59, 130, 246, 0.5)" borderColor="hsl(213, 94%, 60%)">
+              <TechCard>
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <span className="mr-2">API 密鑰管理</span>
@@ -52,7 +52,7 @@ const DashboardPage = () => {
             </div>
             
             <div className="animate-scale-in" style={{ animationDelay: '100ms' }}>
-              <TechCard glowColor="rgba(16, 185, 129, 0.5)" borderColor="hsl(160, 84%, 39%)">
+              <TechCard>
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <span className="mr-2">交易策略</span>
@@ -77,7 +77,7 @@ const DashboardPage = () => {
             </div>
             
             <div className="animate-scale-in" style={{ animationDelay: '200ms' }}>
-              <TechCard glowColor="rgba(236, 72, 153, 0.5)" borderColor="hsl(330, 86%, 60%)">
+              <TechCard>
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <span className="mr-2">自動交易</span>
@@ -135,11 +135,6 @@ const DashboardPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex justify-end">
-                <Link to="/multiprocessing">
-                  <Button variant="outline" size="sm">查看詳情</Button>
-                </Link>
-              </div>
             </div>
             <div className="space-y-4 animate-scale-in" style={{ animationDelay: '400ms' }}>
               <h2 className="text-2xl font-bold tracking-tighter flex items-center">
@@ -164,11 +159,6 @@ const DashboardPage = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex justify-end">
-                <Link to="/trading">
-                  <Button variant="outline" size="sm">查看所有交易</Button>
-                </Link>
               </div>
             </div>
           </div>

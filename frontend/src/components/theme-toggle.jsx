@@ -5,40 +5,9 @@ import { Button } from "@/components/ui/button";
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
-  // 點擊時循環切換主題：light -> dark -> system -> light
+  // 點擊時切換主題：light <-> dark
   const toggleTheme = () => {
-    if (theme === 'light') {
-      setTheme('dark');
-    } else if (theme === 'dark') {
-      setTheme('system');
-    } else {
-      setTheme('light');
-    }
-  };
-
-  // 根據當前主題顯示對應的圖標和提示
-  const getThemeIcon = () => {
-    if (theme === 'light') {
-      return <Sun className="h-4 w-4" />;
-    } else if (theme === 'dark') {
-      return <Moon className="h-4 w-4" />;
-    } else {
-      return (
-        <div className="h-4 w-4 flex items-center justify-center">
-          <span className="text-xs">💻</span>
-        </div>
-      );
-    }
-  };
-
-  const getThemeTooltip = () => {
-    if (theme === 'light') {
-      return "切換至深色模式";
-    } else if (theme === 'dark') {
-      return "切換至系統模式";
-    } else {
-      return "切換至淺色模式";
-    }
+    setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
   return (
@@ -47,10 +16,16 @@ export function ThemeToggle() {
       size="icon"
       className="relative h-8 w-8 rounded-full"
       onClick={toggleTheme}
-      title={getThemeTooltip()}
+      title={theme === 'light' ? "切換至深色模式" : "切換至淺色模式"}
     >
-      {getThemeIcon()}
-      <span className="sr-only">{getThemeTooltip()}</span>
+      {theme === 'light' ? (
+        <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+      ) : (
+        <Moon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+      )}
+      <span className="sr-only">
+        {theme === 'light' ? "切換至深色模式" : "切換至淺色模式"}
+      </span>
     </Button>
   );
 } 

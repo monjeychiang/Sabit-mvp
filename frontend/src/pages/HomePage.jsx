@@ -72,7 +72,7 @@ const HomePage = () => {
         <div className="w-full px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-3 lg:gap-12">
             <div className="animate-slide-in-left" style={{ animationDelay: '0ms' }}>
-              <TechCard glowColor="rgba(59, 130, 246, 0.5)" borderColor="hsl(213, 94%, 60%)">
+              <TechCard>
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <span className="mr-2">市場數據分析</span>
@@ -96,7 +96,7 @@ const HomePage = () => {
             </div>
             
             <div className="animate-slide-in-left" style={{ animationDelay: '200ms' }}>
-              <TechCard glowColor="rgba(16, 185, 129, 0.5)" borderColor="hsl(160, 84%, 39%)">
+              <TechCard>
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <span className="mr-2">交易策略管理</span>
@@ -121,7 +121,7 @@ const HomePage = () => {
             </div>
             
             <div className="animate-slide-in-left" style={{ animationDelay: '400ms' }}>
-              <TechCard glowColor="rgba(236, 72, 153, 0.5)" borderColor="hsl(330, 86%, 60%)">
+              <TechCard>
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <span className="mr-2">自動化交易執行</span>

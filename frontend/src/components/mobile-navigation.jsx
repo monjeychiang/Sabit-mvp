@@ -3,11 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { BarChart3, BookOpen, Cpu, Home, Key, Menu, Settings, Wallet } from 'lucide-react';
+import { BarChart3, BookOpen, Cpu, Home, Key, LineChart, LogOut, Menu, Settings, Wallet, User } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
-export function MobileNavigation() {
+export function MobileNavigation({ onNavigate }) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { isAuthenticated, logout } = useAuth();
   
   const isActive = (path) => {
     if (path === '/') {
@@ -16,6 +18,11 @@ export function MobileNavigation() {
     return location.pathname.startsWith(path);
   };
   
+  const handleLogout = () => {
+    logout();
+    if (onNavigate) onNavigate();
+  };
+
   const NavItem = ({ to, icon: Icon, children, className }) => (
     <Link 
       to={to} 
@@ -61,8 +68,40 @@ export function MobileNavigation() {
           
           <div className="px-2">
             <h3 className="text-sm font-medium text-muted-foreground px-2 mb-1">進階功能</h3>
-            <NavItem to="/multiprocessing" icon={Cpu}>多核心處理</NavItem>
             <NavItem to="/components" icon={BookOpen}>組件庫</NavItem>
+          </div>
+          
+          <div className="px-2">
+            <h3 className="text-sm font-medium text-muted-foreground px-2 mb-1">價格監控</h3>
+            <NavItem to="/price-monitor" icon={LineChart}>價格監控</NavItem>
+          </div>
+          
+          <div className="px-2">
+            <h3 className="text-sm font-medium text-muted-foreground px-2 mb-1">登入登出</h3>
+            {isAuthenticated && (
+              <>
+                <Button 
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  登出
+                </Button>
+              </>
+            )}
+            
+            {!isAuthenticated && (
+              <Link to="/login" onClick={onNavigate}>
+                <Button 
+                  variant="ghost"
+                  className="w-full justify-start"
+                >
+                  <User className="mr-2 h-4 w-4" />
+                  登入
+                </Button>
+              </Link>
+            )}
           </div>
         </nav>
       </SheetContent>

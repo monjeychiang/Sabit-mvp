@@ -38,7 +38,7 @@ export function MainNavigation() {
         </NavigationMenuItem>
         
         <NavigationMenuItem>
-          <NavigationMenuTrigger className={isActive('/dashboard') || isActive('/trading') || isActive('/exchange-keys') ? 'bg-primary text-primary-foreground' : ''}>
+          <NavigationMenuTrigger className={isActive('/dashboard') || isActive('/trading') || isActive('/exchange-keys') || isActive('/price-monitor') ? 'bg-primary text-primary-foreground' : ''}>
             <Settings className="w-4 h-4 mr-2" />
             交易中心
           </NavigationMenuTrigger>
@@ -93,6 +93,22 @@ export function MainNavigation() {
                   </Link>
                 </NavigationMenuLink>
               </li>
+              <li>
+                <NavigationMenuLink asChild>
+                  <Link to="/price-monitor" className={cn(
+                    "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                    isActive('/price-monitor') ? 'bg-accent' : ''
+                  )}>
+                    <div className="flex items-center gap-2">
+                      <LineChart className="h-4 w-4 text-primary" />
+                      <div className="text-sm font-medium leading-none">價格監控</div>
+                    </div>
+                    <p className="line-clamp-2 text-xs text-muted-foreground">
+                      監控加密貨幣實時價格，支持多交易所
+                    </p>
+                  </Link>
+                </NavigationMenuLink>
+              </li>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
@@ -110,28 +126,12 @@ export function MainNavigation() {
         </NavigationMenuItem>
         
         <NavigationMenuItem>
-          <NavigationMenuTrigger className={isActive('/multiprocessing') || isActive('/components') ? 'bg-primary text-primary-foreground' : ''}>
+          <NavigationMenuTrigger className={isActive('/components') ? 'bg-primary text-primary-foreground' : ''}>
             <Cpu className="w-4 h-4 mr-2" />
             進階功能
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:grid-cols-2">
-              <li>
-                <NavigationMenuLink asChild>
-                  <Link to="/multiprocessing" className={cn(
-                    "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                    isActive('/multiprocessing') ? 'bg-accent' : ''
-                  )}>
-                    <div className="flex items-center gap-2">
-                      <Cpu className="h-4 w-4 text-primary" />
-                      <div className="text-sm font-medium leading-none">多核心處理</div>
-                    </div>
-                    <p className="line-clamp-2 text-xs text-muted-foreground">
-                      高效能並行數據處理和分析
-                    </p>
-                  </Link>
-                </NavigationMenuLink>
-              </li>
               <li>
                 <NavigationMenuLink asChild>
                   <Link to="/components" className={cn(

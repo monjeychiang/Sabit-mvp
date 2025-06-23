@@ -21,7 +21,7 @@ const OperationsMenu = () => {
   
   // 判斷是否在操作頁面
   const isInOperations = () => {
-    const operationPaths = ['/dashboard', '/exchange-keys', '/trading', '/multiprocessing', '/components'];
+    const operationPaths = ['/dashboard', '/exchange-keys', '/trading', '/components'];
     return operationPaths.includes(location.pathname);
   };
 
@@ -59,12 +59,6 @@ const OperationsMenu = () => {
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
-        <Link to="/multiprocessing">
-          <DropdownMenuItem className={`cursor-pointer ${isActive('/multiprocessing') ? 'bg-accent' : ''}`}>
-            <Cpu className="w-4 h-4 mr-2" />
-            <span>多核心處理</span>
-          </DropdownMenuItem>
-        </Link>
         <Link to="/components">
           <DropdownMenuItem className={`cursor-pointer ${isActive('/components') ? 'bg-accent' : ''}`}>
             <Component className="w-4 h-4 mr-2" />
