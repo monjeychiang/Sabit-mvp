@@ -1,5 +1,105 @@
 # 變更紀錄
 
+## 2023-11-17: 移除多核心處理功能，簡化用戶初始化流程
+
+### 變更概述
+移除多核心處理相關功能模組與前端頁面，並簡化資料庫初始化流程，僅保留創建單一管理員用戶的功能。
+
+### 技術實現
+1. 後端變更：
+   - 移除 `app/api/endpoints/processing.py`，刪除多核心處理相關 API 端點
+   - 移除 `app/core/worker.py`，刪除多核心任務管理器模組
+   - 修改 `app/api/api.py`，移除對 processing 路由的引用
+   - 修改 `app/utils/initialize_db.py`，僅保留創建管理員用戶功能
+
+2. 前端變更：
+   - 刪除 `src/pages/MultiProcessingTest.jsx` 與 `MultiProcessingTest.css` 文件
+   - 從 `App.jsx` 中移除相關路由配置
+   - 從導航菜單（主菜單、移動版菜單、操作菜單）中移除多核心處理選項
+   - 從儀表板頁面中移除多核心處理的鏈接
+
+### 檔案變更
+- 刪除 `backend/app/api/endpoints/processing.py`
+- 刪除 `backend/app/core/worker.py`
+- 修改 `backend/app/api/api.py`
+- 修改 `backend/app/utils/initialize_db.py`
+- 刪除 `frontend/src/pages/MultiProcessingTest.jsx`
+- 刪除 `frontend/src/pages/MultiProcessingTest.css`
+- 修改 `frontend/src/App.jsx`
+- 修改 `frontend/src/components/operations-menu.jsx`
+- 修改 `frontend/src/components/mobile-navigation.jsx`
+- 修改 `frontend/src/components/main-navigation.jsx`
+- 修改 `frontend/src/pages/DashboardPage.jsx`
+
+### 效能影響
+- 減小應用程序體積，降低系統複雜性
+- 移除不必要的依賴和功能，提高應用整體效能
+- 簡化資料庫初始化流程，加快啟動速度
+
+### 維護性改進
+- 減少不必要的代碼和功能，使系統更易於維護
+- 簡化用戶管理，僅保留管理員用戶
+- 降低整體系統複雜度，聚焦於核心功能
+
+## 2023-11-16: 移除未使用的資料庫模組檔案，提升程式碼整潔度
+
+### 變更概述
+移除未被使用且功能重複的資料庫會話管理檔案 `app/db/session.py`，降低程式碼冗餘度並減少維護成本。
+
+### 技術實現
+1. 分析資料庫模組架構：
+   - 識別出兩個功能重複的檔案 `database.py` 與 `session.py`
+   - 確認專案中僅有 `database.py` 被實際引用與使用
+   - 移除未被引用的 `session.py` 檔案
+
+### 檔案變更
+- 刪除 `app/db/session.py` 檔案
+
+### 效能影響
+- 無直接效能影響
+- 減少程式碼冗餘，降低維護成本
+- 避免未來開發人員在選擇使用哪個資料庫會話管理模組時的混淆
+
+### 維護性改進
+- 消除資料庫連線管理的重複實現
+- 簡化程式碼架構，提高可讀性
+- 避免未來因重複功能導致的不一致性問題
+
+## 2023-11-15: 修復前後端連接問題並優化錯誤處理
+
+### 變更概述
+解決前後端連接問題，修復 `/api/health` 請求拒絕錯誤，並優化錯誤處理機制，確保系統穩定性。
+
+### 技術實現
+1. 前端 Vite 代理配置優化：
+   - 增強代理配置，添加錯誤處理機制
+   - 優化連接失敗的友好錯誤提示
+   - 提升系統在後端未啟動時的穩定性
+
+2. 後端 API 路由優化：
+   - 在根層級直接添加 `/api/health` 路由，解決尾部斜線問題
+   - 增強 CORS 配置，支持更多 HTTP 方法
+   - 添加日誌以便更好追蹤請求流程
+
+3. Node.js 棄用警告處理：
+   - 修改前端啟動腳本，抑制 `util._extend` 棄用警告
+   - 使用 `--no-deprecation` 標誌確保開發時的良好體驗
+
+### 檔案變更
+- 修改 `frontend/vite.config.js`: 優化代理配置和錯誤處理
+- 修改 `frontend/package.json`: 更新開發腳本，抑制棄用警告
+- 修改 `backend/main.py`: 增強 CORS 配置，添加根層級健康檢查路由
+
+### 效能影響
+- 提高前後端連接的穩定性
+- 減少因路由不匹配導致的請求失敗
+- 改善開發環境的使用者體驗
+
+### 維護性改進
+- 更詳細的日誌記錄，便於問題診斷
+- 更友好的錯誤提示，便於開發調試
+- 符合 FastAPI 和 Vite 的最佳實踐
+
 ## 2023-11-14: 重構資料庫和模型結構，符合 FastAPI 最佳實踐
 
 ### 變更概述

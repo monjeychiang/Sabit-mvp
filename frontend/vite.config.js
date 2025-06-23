@@ -17,6 +17,17 @@ export default defineConfig({
         target: 'http://localhost:8000',
         changeOrigin: true,
         secure: false,
+        rewrite: (path) => path,
+        configure: (proxy, options) => {
+          proxy.on('error', (err, req, res) => {
+            console.log('代理錯誤：', err);
+            res.statusCode = 503;
+            res.end(JSON.stringify({ 
+              message: '後端服務暫時不可用，請確認後端服務已啟動', 
+              status: 'error' 
+            }));
+          });
+        }
       }
     }
   }

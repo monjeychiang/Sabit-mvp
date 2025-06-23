@@ -27,12 +27,16 @@ app = FastAPI(
 )
 
 # 配置 CORS
+cors_origins = os.environ.get("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",")
+logger.info(f"配置 CORS 允許的來源: {cors_origins}")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=os.environ.get("CORS_ORIGINS", "http://localhost:5173").split(","),  # 從環境變數讀取，支援多個來源
+    allow_origins=cors_origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allow_headers=["*"],
+    expose_headers=["Content-Disposition"],
+    max_age=600,  # 預檢請求的結果緩存10分鐘
 )
 
 # 註冊路由
@@ -83,6 +87,17 @@ async def sync_system_time():
         'binance_offset': f"{result['binance_offset']:.3f}秒",
         'preferred_service': result['preferred_service'],
         'message': result['message']
+    }
+
+# 健康檢查端點（根路徑）
+@app.get("/api/health")
+async def root_health_check():
+    """API 根路徑健康檢查（無需 /api/health/ 後綴）"""
+    logger.info("收到根路徑健康檢查請求 /api/health")
+    return {
+        "status": "healthy",
+        "service": "fastapi-backend",
+        "version": "0.1.0"
     }
 
 # 根路由
