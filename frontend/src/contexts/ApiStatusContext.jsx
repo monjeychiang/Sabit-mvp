@@ -1,11 +1,11 @@
-import React, { createContext, useContext } from 'react';
-import { useApiStatus } from '../hooks/useApiStatus';
+import React, { createContext, useContext } from "react";
+import { useApiStatus } from "../hooks/useApiStatus";
 
 // 創建 Context
 export const ApiStatusContext = createContext({
-  status: 'loading',
+  status: "loading",
   lastChecked: null,
-  checkApiStatus: () => {}
+  checkApiStatus: () => {},
 });
 
 /**
@@ -16,7 +16,7 @@ export const ApiStatusContext = createContext({
  */
 export function ApiStatusProvider({ children, checkInterval = 30000 }) {
   const apiStatus = useApiStatus(checkInterval);
-  
+
   return (
     <ApiStatusContext.Provider value={apiStatus}>
       {children}
@@ -30,10 +30,10 @@ export function ApiStatusProvider({ children, checkInterval = 30000 }) {
  */
 export function useApiStatusContext() {
   const context = useContext(ApiStatusContext);
-  
+
   if (context === undefined) {
-    throw new Error('useApiStatusContext 必須在 ApiStatusProvider 內使用');
+    throw new Error("useApiStatusContext 必須在 ApiStatusProvider 內使用");
   }
-  
+
   return context;
-} 
+}

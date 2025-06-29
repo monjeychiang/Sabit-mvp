@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import axios from 'axios';
-import { useAuth } from '@/contexts/AuthContext';
+import axios from "axios";
+import { useAuth } from "@/contexts/AuthContext";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -26,8 +26,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import DataFlow from '@/components/ui/data-flow';
-import { Logo } from '@/components/ui/logo';
+import DataFlow from "@/components/ui/data-flow";
+import { Logo } from "@/components/ui/logo";
 
 // 定義表單模式
 const formSchema = z.object({
@@ -58,31 +58,31 @@ function LoginPage() {
   const onSubmit = async (values) => {
     setIsLoading(true);
     try {
-      const response = await axios.post('/api/auth/login', values);
-      
+      const response = await axios.post("/api/auth/login", values);
+
       // 保存令牌和用戶信息到本地存儲
-      localStorage.setItem('auth_token', response.data.access_token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      
+      localStorage.setItem("auth_token", response.data.access_token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
       // 更新 AuthContext 中的用戶狀態
       updateUser(response.data.user);
-      
+
       // 顯示成功提示
       toast({
         title: "登入成功",
         description: `歡迎回來，${response.data.user.username}！`,
       });
-      
+
       // 跳轉到儀表板
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (error) {
-      console.error('登入失敗:', error);
-      
+      console.error("登入失敗:", error);
+
       let errorMessage = "登入失敗，請檢查您的憑據";
       if (error.response && error.response.data && error.response.data.detail) {
         errorMessage = error.response.data.detail;
       }
-      
+
       // 顯示錯誤提示
       toast({
         title: "登入失敗",
@@ -100,22 +100,27 @@ function LoginPage() {
       <div className="absolute inset-0 z-0 opacity-20">
         <DataFlow height="100%" />
       </div>
-      
+
       <div className="w-full max-w-md z-10">
         <div className="flex justify-center mb-6">
           <Logo size="large" />
         </div>
-        
+
         <Card className="w-full">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold text-center">登入</CardTitle>
+            <CardTitle className="text-2xl font-bold text-center">
+              登入
+            </CardTitle>
             <CardDescription className="text-center">
               輸入您的憑據以訪問交易中心
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
                 <FormField
                   control={form.control}
                   name="username"
@@ -123,9 +128,9 @@ function LoginPage() {
                     <FormItem>
                       <FormLabel>用戶名</FormLabel>
                       <FormControl>
-                        <Input 
-                          placeholder="輸入您的用戶名" 
-                          {...field} 
+                        <Input
+                          placeholder="輸入您的用戶名"
+                          {...field}
                           disabled={isLoading}
                         />
                       </FormControl>
@@ -133,6 +138,7 @@ function LoginPage() {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="password"
@@ -140,10 +146,10 @@ function LoginPage() {
                     <FormItem>
                       <FormLabel>密碼</FormLabel>
                       <FormControl>
-                        <Input 
-                          type="password" 
-                          placeholder="輸入您的密碼" 
-                          {...field} 
+                        <Input
+                          type="password"
+                          placeholder="輸入您的密碼"
+                          {...field}
                           disabled={isLoading}
                         />
                       </FormControl>
@@ -151,6 +157,7 @@ function LoginPage() {
                     </FormItem>
                   )}
                 />
+
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? "登入中..." : "登入"}
                 </Button>
@@ -159,20 +166,20 @@ function LoginPage() {
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
             <div className="text-sm text-center text-muted-foreground">
-              還沒有帳戶？ 
-              <Button 
-                variant="link" 
-                className="pl-1 h-auto p-0" 
-                onClick={() => navigate('/register')}
+              還沒有帳戶？
+              <Button
+                variant="link"
+                className="pl-1 h-auto p-0"
+                onClick={() => navigate("/register")}
                 disabled={isLoading}
               >
                 註冊
               </Button>
             </div>
-            <Button 
-              variant="outline" 
-              className="w-full" 
-              onClick={() => navigate('/')}
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => navigate("/")}
               disabled={isLoading}
             >
               返回首頁
@@ -184,4 +191,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage; 
+export default LoginPage;

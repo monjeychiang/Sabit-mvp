@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -14,12 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -34,30 +29,30 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
   const [reportFormat, setReportFormat] = useState("pdf");
   const [dateRange, setDateRange] = useState({
     start: "2023-01-01",
-    end: new Date().toISOString().split('T')[0]
+    end: new Date().toISOString().split("T")[0],
   });
   const [reportOptions, setReportOptions] = useState({
     includeTransactions: true,
     includeFees: true,
     includeUnrealizedGains: true,
     groupByExchange: false,
-    groupByCurrency: true
+    groupByCurrency: true,
   });
   const { toast } = useToast();
 
   // 處理報表選項變更
   const handleOptionChange = (option) => {
-    setReportOptions(prev => ({
+    setReportOptions((prev) => ({
       ...prev,
-      [option]: !prev[option]
+      [option]: !prev[option],
     }));
   };
 
   // 處理日期範圍變更
   const handleDateChange = (field, value) => {
-    setDateRange(prev => ({
+    setDateRange((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -67,13 +62,13 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
       toast({
         title: "無法生成報表",
         description: "請先選擇資產組合",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
-    
+
     setIsGenerating(true);
-    
+
     try {
       // 模擬 API 調用，實際開發時替換為真實 API
       // const response = await axios.post(`http://localhost:8000/api/reports/${reportType}`, {
@@ -83,17 +78,17 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
       //   end_date: dateRange.end,
       //   options: reportOptions
       // }, { responseType: 'blob' });
-      
+
       // 模擬報表生成延遲
       setTimeout(() => {
         toast({
           title: "報表生成成功",
-          description: `已成功生成${reportType === 'profit-loss' ? '盈虧報表' : '稅務報告'}`,
-          variant: "success"
+          description: `已成功生成${reportType === "profit-loss" ? "盈虧報表" : "稅務報告"}`,
+          variant: "success",
         });
         setIsGenerating(false);
       }, 2000);
-      
+
       // 實際開發時下載檔案
       // const url = window.URL.createObjectURL(new Blob([response.data]));
       // const link = document.createElement('a');
@@ -103,11 +98,11 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
       // link.click();
       // link.remove();
     } catch (error) {
-      console.error('生成報表失敗:', error);
+      console.error("生成報表失敗:", error);
       toast({
         title: "生成報表失敗",
         description: error.message || "請稍後再試",
-        variant: "destructive"
+        variant: "destructive",
       });
       setIsGenerating(false);
     }
@@ -116,11 +111,11 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
   // 獲取報表格式圖標
   const getFormatIcon = () => {
     switch (reportFormat) {
-      case 'pdf':
+      case "pdf":
         return <FileText className="h-5 w-5" />;
-      case 'csv':
+      case "csv":
         return <FileSpreadsheet className="h-5 w-5" />;
-      case 'xlsx':
+      case "xlsx":
         return <FileSpreadsheet className="h-5 w-5" />;
       default:
         return <FileText className="h-5 w-5" />;
@@ -140,7 +135,7 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
               <TabsTrigger value="profit-loss">盈虧報表</TabsTrigger>
               <TabsTrigger value="tax">稅務報告</TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="profit-loss">
               <div className="space-y-6">
                 <div>
@@ -149,7 +144,7 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
                     生成詳細的資產盈虧報表，包括已實現和未實現的收益/損失，交易費用等。
                   </p>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div>
@@ -158,23 +153,30 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
                         id="start-date"
                         type="date"
                         value={dateRange.start}
-                        onChange={(e) => handleDateChange('start', e.target.value)}
+                        onChange={(e) =>
+                          handleDateChange("start", e.target.value)
+                        }
                       />
                     </div>
-                    
+
                     <div>
                       <Label htmlFor="end-date">結束日期</Label>
                       <Input
                         id="end-date"
                         type="date"
                         value={dateRange.end}
-                        onChange={(e) => handleDateChange('end', e.target.value)}
+                        onChange={(e) =>
+                          handleDateChange("end", e.target.value)
+                        }
                       />
                     </div>
-                    
+
                     <div>
                       <Label htmlFor="report-format">報表格式</Label>
-                      <Select value={reportFormat} onValueChange={setReportFormat}>
+                      <Select
+                        value={reportFormat}
+                        onValueChange={setReportFormat}
+                      >
                         <SelectTrigger id="report-format">
                           <SelectValue placeholder="選擇格式" />
                         </SelectTrigger>
@@ -186,59 +188,74 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
                       </Select>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-4">
                     <h4 className="text-sm font-medium">報表選項</h4>
-                    
+
                     <div className="flex items-center space-x-2">
                       <Checkbox
                         id="include-transactions"
                         checked={reportOptions.includeTransactions}
-                        onCheckedChange={() => handleOptionChange('includeTransactions')}
+                        onCheckedChange={() =>
+                          handleOptionChange("includeTransactions")
+                        }
                       />
+
                       <Label htmlFor="include-transactions">包含交易明細</Label>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
                       <Checkbox
                         id="include-fees"
                         checked={reportOptions.includeFees}
-                        onCheckedChange={() => handleOptionChange('includeFees')}
+                        onCheckedChange={() =>
+                          handleOptionChange("includeFees")
+                        }
                       />
+
                       <Label htmlFor="include-fees">包含手續費</Label>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
                       <Checkbox
                         id="include-unrealized"
                         checked={reportOptions.includeUnrealizedGains}
-                        onCheckedChange={() => handleOptionChange('includeUnrealizedGains')}
+                        onCheckedChange={() =>
+                          handleOptionChange("includeUnrealizedGains")
+                        }
                       />
+
                       <Label htmlFor="include-unrealized">包含未實現盈虧</Label>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
                       <Checkbox
                         id="group-by-exchange"
                         checked={reportOptions.groupByExchange}
-                        onCheckedChange={() => handleOptionChange('groupByExchange')}
+                        onCheckedChange={() =>
+                          handleOptionChange("groupByExchange")
+                        }
                       />
+
                       <Label htmlFor="group-by-exchange">按交易所分組</Label>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
                       <Checkbox
                         id="group-by-currency"
                         checked={reportOptions.groupByCurrency}
-                        onCheckedChange={() => handleOptionChange('groupByCurrency')}
+                        onCheckedChange={() =>
+                          handleOptionChange("groupByCurrency")
+                        }
                       />
+
                       <Label htmlFor="group-by-currency">按幣種分組</Label>
                     </div>
                   </div>
                 </div>
               </div>
             </TabsContent>
-            
+
             <TabsContent value="tax">
               <div className="space-y-6">
                 <div>
@@ -247,7 +264,7 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
                     生成符合稅務申報要求的報表，包括資本利得、收入和可扣除費用等。
                   </p>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div>
@@ -263,7 +280,7 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
                         </SelectContent>
                       </Select>
                     </div>
-                    
+
                     <div>
                       <Label htmlFor="tax-region">稅務地區</Label>
                       <Select defaultValue="tw">
@@ -278,10 +295,13 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
                         </SelectContent>
                       </Select>
                     </div>
-                    
+
                     <div>
                       <Label htmlFor="tax-report-format">報表格式</Label>
-                      <Select value={reportFormat} onValueChange={setReportFormat}>
+                      <Select
+                        value={reportFormat}
+                        onValueChange={setReportFormat}
+                      >
                         <SelectTrigger id="tax-report-format">
                           <SelectValue placeholder="選擇格式" />
                         </SelectTrigger>
@@ -293,33 +313,43 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
                       </Select>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-4">
                     <h4 className="text-sm font-medium">稅務報表選項</h4>
-                    
+
                     <div className="flex items-center space-x-2">
                       <Checkbox defaultChecked id="include-capital-gains" />
-                      <Label htmlFor="include-capital-gains">包含資本利得</Label>
+
+                      <Label htmlFor="include-capital-gains">
+                        包含資本利得
+                      </Label>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
                       <Checkbox defaultChecked id="include-income" />
-                      <Label htmlFor="include-income">包含收入（挖礦、質押等）</Label>
+
+                      <Label htmlFor="include-income">
+                        包含收入（挖礦、質押等）
+                      </Label>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
                       <Checkbox defaultChecked id="include-deductions" />
+
                       <Label htmlFor="include-deductions">包含可扣除費用</Label>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
                       <Checkbox defaultChecked id="use-fifo" />
+
                       <Label htmlFor="use-fifo">使用先進先出法（FIFO）</Label>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
                       <Checkbox id="include-form-examples" />
-                      <Label htmlFor="include-form-examples">包含申報表範例</Label>
+                      <Label htmlFor="include-form-examples">
+                        包含申報表範例
+                      </Label>
                     </div>
                   </div>
                 </div>
@@ -331,9 +361,12 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
           <div className="flex items-center">
             {getFormatIcon()}
             <span className="ml-2">
-              {reportType === 'profit-loss' ? '盈虧報表' : '稅務報告'} - 
-              {reportFormat === 'pdf' ? ' PDF 文件' : 
-               reportFormat === 'csv' ? ' CSV 檔案' : ' Excel 檔案'}
+              {reportType === "profit-loss" ? "盈虧報表" : "稅務報告"} -
+              {reportFormat === "pdf"
+                ? " PDF 文件"
+                : reportFormat === "csv"
+                  ? " CSV 檔案"
+                  : " Excel 檔案"}
             </span>
           </div>
           <Button onClick={generateReport} disabled={isGenerating}>
@@ -351,7 +384,7 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
           </Button>
         </CardFooter>
       </Card>
-      
+
       {/* 報表預覽 */}
       <Card className="mt-8">
         <CardHeader>
@@ -362,6 +395,7 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
           <div className="w-full h-full flex items-center justify-center bg-muted/20 rounded-md">
             <div className="text-center">
               <FileText className="h-12 w-12 mx-auto text-muted-foreground" />
+
               <p className="mt-4 text-muted-foreground">
                 點擊「生成並下載」按鈕以生成報表
               </p>
@@ -369,7 +403,7 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
           </div>
         </CardContent>
       </Card>
-      
+
       {/* 報表歷史 */}
       <Card className="mt-8">
         <CardHeader>
@@ -378,9 +412,7 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
         </CardHeader>
         <CardContent>
           <div className="text-center py-8">
-            <p className="text-muted-foreground">
-              尚無報表歷史記錄
-            </p>
+            <p className="text-muted-foreground">尚無報表歷史記錄</p>
           </div>
         </CardContent>
       </Card>
@@ -388,4 +420,4 @@ const ReportCenter = ({ portfolioId, isLoading: parentLoading }) => {
   );
 };
 
-export default ReportCenter; 
+export default ReportCenter;

@@ -1,8 +1,8 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useAuth } from '@/contexts/AuthContext';
-import { LogIn, LogOut, User } from 'lucide-react';
+import { useAuth } from "@/contexts/AuthContext";
+import { LogIn, LogOut, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,13 +28,13 @@ export function LoginButton() {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>我的帳戶</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate('/dashboard')}>
+          <DropdownMenuItem onClick={() => navigate("/dashboard")}>
             儀表板
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigate('/exchange-keys')}>
+          <DropdownMenuItem onClick={() => navigate("/exchange-keys")}>
             API 密鑰管理
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigate('/trading')}>
+          <DropdownMenuItem onClick={() => navigate("/trading")}>
             交易操作
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -48,13 +48,13 @@ export function LoginButton() {
   }
 
   return (
-    <Button 
-      variant="default" 
-      onClick={() => navigate('/login')}
+    <Button
+      variant="default"
+      onClick={() => navigate("/login")}
       className="flex items-center gap-2"
     >
       <LogIn className="w-4 h-4" />
       登入
     </Button>
   );
-} 
+}

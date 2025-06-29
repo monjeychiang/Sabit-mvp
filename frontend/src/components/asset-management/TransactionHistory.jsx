@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -44,75 +44,76 @@ const TransactionHistory = ({ portfolioId, isLoading: parentLoading }) => {
       // 模擬 API 調用，實際開發時替換為真實 API
       // const response = await axios.get(`http://localhost:8000/api/portfolios/${portfolioId}/transactions`);
       // setTransactions(response.data);
-      
+
       // 模擬數據
       setTimeout(() => {
         const mockTransactions = [
-          { 
-            id: 1, 
-            symbol: "BTC", 
-            type: "buy", 
-            amount: 0.5, 
-            price: 44000, 
-            value: 22000, 
-            fee: 22, 
+          {
+            id: 1,
+            symbol: "BTC",
+            type: "buy",
+            amount: 0.5,
+            price: 44000,
+            value: 22000,
+            fee: 22,
             timestamp: "2023-11-10T08:30:00Z",
-            exchange: "Binance"
+            exchange: "Binance",
           },
-          { 
-            id: 2, 
-            symbol: "ETH", 
-            type: "buy", 
-            amount: 5, 
-            price: 2000, 
-            value: 10000, 
-            fee: 10, 
+          {
+            id: 2,
+            symbol: "ETH",
+            type: "buy",
+            amount: 5,
+            price: 2000,
+            value: 10000,
+            fee: 10,
             timestamp: "2023-11-05T12:45:00Z",
-            exchange: "Coinbase"
+            exchange: "Coinbase",
           },
-          { 
-            id: 3, 
-            symbol: "BNB", 
-            type: "buy", 
-            amount: 10, 
-            price: 250, 
-            value: 2500, 
-            fee: 2.5, 
+          {
+            id: 3,
+            symbol: "BNB",
+            type: "buy",
+            amount: 10,
+            price: 250,
+            value: 2500,
+            fee: 2.5,
             timestamp: "2023-10-28T15:20:00Z",
-            exchange: "Binance"
+            exchange: "Binance",
           },
-          { 
-            id: 4, 
-            symbol: "SOL", 
-            type: "buy", 
-            amount: 50, 
-            price: 80, 
-            value: 4000, 
-            fee: 4, 
+          {
+            id: 4,
+            symbol: "SOL",
+            type: "buy",
+            amount: 50,
+            price: 80,
+            value: 4000,
+            fee: 4,
             timestamp: "2023-10-15T09:10:00Z",
-            exchange: "Kraken"
+            exchange: "Kraken",
           },
-          { 
-            id: 5, 
-            symbol: "BTC", 
-            type: "sell", 
-            amount: 0.2, 
-            price: 45000, 
-            value: 9000, 
-            fee: 9, 
+          {
+            id: 5,
+            symbol: "BTC",
+            type: "sell",
+            amount: 0.2,
+            price: 45000,
+            value: 9000,
+            fee: 9,
             timestamp: "2023-11-15T14:25:00Z",
-            exchange: "Binance"
-          }
+            exchange: "Binance",
+          },
         ];
+
         setTransactions(mockTransactions);
         setIsLoading(false);
       }, 800);
     } catch (error) {
-      console.error('獲取交易記錄失敗:', error);
+      console.error("獲取交易記錄失敗:", error);
       toast({
         title: "獲取交易記錄失敗",
         description: error.message || "請稍後再試",
-        variant: "destructive"
+        variant: "destructive",
       });
       setIsLoading(false);
     }
@@ -127,30 +128,33 @@ const TransactionHistory = ({ portfolioId, isLoading: parentLoading }) => {
 
   // 處理篩選變更
   const handleFilterChange = (key, value) => {
-    setFilters(prev => ({
+    setFilters((prev) => ({
       ...prev,
-      [key]: value
+      [key]: value,
     }));
   };
 
   // 篩選交易記錄
-  const filteredTransactions = transactions.filter(transaction => {
+  const filteredTransactions = transactions.filter((transaction) => {
     // 按類型篩選
     if (filters.type !== "all" && transaction.type !== filters.type) {
       return false;
     }
-    
+
     // 按幣種篩選
-    if (filters.symbol && !transaction.symbol.toLowerCase().includes(filters.symbol.toLowerCase())) {
+    if (
+      filters.symbol &&
+      !transaction.symbol.toLowerCase().includes(filters.symbol.toLowerCase())
+    ) {
       return false;
     }
-    
+
     // 按日期範圍篩選
     if (filters.dateRange !== "all") {
       const now = new Date();
       const txDate = new Date(transaction.timestamp);
       const daysDiff = Math.floor((now - txDate) / (1000 * 60 * 60 * 24));
-      
+
       if (filters.dateRange === "7days" && daysDiff > 7) {
         return false;
       } else if (filters.dateRange === "30days" && daysDiff > 30) {
@@ -159,33 +163,37 @@ const TransactionHistory = ({ portfolioId, isLoading: parentLoading }) => {
         return false;
       }
     }
-    
+
     return true;
   });
 
   // 格式化日期
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleString('zh-TW', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit'
+    return date.toLocaleString("zh-TW", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   // 交易類型標籤
   const getTransactionBadge = (type) => {
     switch (type) {
-      case 'buy':
+      case "buy":
         return <Badge variant="success">買入</Badge>;
-      case 'sell':
+
+      case "sell":
         return <Badge variant="destructive">賣出</Badge>;
-      case 'transfer_in':
+
+      case "transfer_in":
         return <Badge variant="outline">轉入</Badge>;
-      case 'transfer_out':
+
+      case "transfer_out":
         return <Badge variant="outline">轉出</Badge>;
+
       default:
         return <Badge>{type}</Badge>;
     }
@@ -202,9 +210,9 @@ const TransactionHistory = ({ portfolioId, isLoading: parentLoading }) => {
           {/* 篩選工具列 */}
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="flex items-center">
-              <Select 
-                value={filters.type} 
-                onValueChange={(value) => handleFilterChange('type', value)}
+              <Select
+                value={filters.type}
+                onValueChange={(value) => handleFilterChange("type", value)}
               >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="交易類型" />
@@ -218,11 +226,13 @@ const TransactionHistory = ({ portfolioId, isLoading: parentLoading }) => {
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="flex items-center">
-              <Select 
-                value={filters.dateRange} 
-                onValueChange={(value) => handleFilterChange('dateRange', value)}
+              <Select
+                value={filters.dateRange}
+                onValueChange={(value) =>
+                  handleFilterChange("dateRange", value)
+                }
               >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="日期範圍" />
@@ -235,27 +245,37 @@ const TransactionHistory = ({ portfolioId, isLoading: parentLoading }) => {
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="flex-1 relative">
               <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+
               <Input
                 placeholder="搜尋幣種..."
                 className="pl-8"
                 value={filters.symbol}
-                onChange={(e) => handleFilterChange('symbol', e.target.value)}
+                onChange={(e) => handleFilterChange("symbol", e.target.value)}
               />
             </div>
-            
-            <Button variant="outline" onClick={fetchTransactions} disabled={isLoading}>
-              {isLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <ArrowUpDown className="h-4 w-4 mr-2" />}
+
+            <Button
+              variant="outline"
+              onClick={fetchTransactions}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+              ) : (
+                <ArrowUpDown className="h-4 w-4 mr-2" />
+              )}
               排序
             </Button>
           </div>
-          
+
           {/* 交易記錄表格 */}
           {isLoading ? (
             <div className="flex items-center justify-center py-12">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
+
               <span className="ml-2">載入交易記錄中...</span>
             </div>
           ) : filteredTransactions.length > 0 ? (
@@ -290,17 +310,20 @@ const TransactionHistory = ({ portfolioId, isLoading: parentLoading }) => {
           ) : (
             <div className="text-center py-8">
               <Calendar className="mx-auto h-12 w-12 text-muted-foreground" />
+
               <h3 className="mt-4 text-lg font-semibold">無交易記錄</h3>
               <p className="text-muted-foreground mt-2">
-                {filters.type !== "all" || filters.symbol || filters.dateRange !== "all" ? 
-                  "沒有符合篩選條件的交易記錄" : 
-                  "尚未有任何交易記錄"}
+                {filters.type !== "all" ||
+                filters.symbol ||
+                filters.dateRange !== "all"
+                  ? "沒有符合篩選條件的交易記錄"
+                  : "尚未有任何交易記錄"}
               </p>
             </div>
           )}
         </CardContent>
       </Card>
-      
+
       {/* 交易統計卡片 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
         <Card>
@@ -311,12 +334,12 @@ const TransactionHistory = ({ portfolioId, isLoading: parentLoading }) => {
           <CardContent>
             <div className="text-3xl font-bold">{transactions.length}</div>
             <p className="text-sm text-muted-foreground mt-2">
-              買入: {transactions.filter(tx => tx.type === 'buy').length} | 
-              賣出: {transactions.filter(tx => tx.type === 'sell').length}
+              買入: {transactions.filter((tx) => tx.type === "buy").length} |
+              賣出: {transactions.filter((tx) => tx.type === "sell").length}
             </p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader>
             <CardTitle>總交易額</CardTitle>
@@ -324,14 +347,20 @@ const TransactionHistory = ({ portfolioId, isLoading: parentLoading }) => {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">
-              ${transactions.reduce((sum, tx) => sum + tx.value, 0).toLocaleString()}
+              $
+              {transactions
+                .reduce((sum, tx) => sum + tx.value, 0)
+                .toLocaleString()}
             </div>
             <p className="text-sm text-muted-foreground mt-2">
-              總手續費: ${transactions.reduce((sum, tx) => sum + tx.fee, 0).toLocaleString()}
+              總手續費: $
+              {transactions
+                .reduce((sum, tx) => sum + tx.fee, 0)
+                .toLocaleString()}
             </p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader>
             <CardTitle>最活躍幣種</CardTitle>
@@ -345,16 +374,18 @@ const TransactionHistory = ({ portfolioId, isLoading: parentLoading }) => {
                     transactions.reduce((acc, tx) => {
                       acc[tx.symbol] = (acc[tx.symbol] || 0) + 1;
                       return acc;
-                    }, {})
-                  ).sort((a, b) => b[1] - a[1])[0]?.[0] || 'N/A'}
+                    }, {}),
+                  ).sort((a, b) => b[1] - a[1])[0]?.[0] || "N/A"}
                 </div>
                 <p className="text-sm text-muted-foreground mt-2">
-                  共 {Object.entries(
+                  共{" "}
+                  {Object.entries(
                     transactions.reduce((acc, tx) => {
                       acc[tx.symbol] = (acc[tx.symbol] || 0) + 1;
                       return acc;
-                    }, {})
-                  ).sort((a, b) => b[1] - a[1])[0]?.[1] || 0} 筆交易
+                    }, {}),
+                  ).sort((a, b) => b[1] - a[1])[0]?.[1] || 0}{" "}
+                  筆交易
                 </p>
               </>
             ) : (
@@ -367,4 +398,4 @@ const TransactionHistory = ({ portfolioId, isLoading: parentLoading }) => {
   );
 };
 
-export default TransactionHistory; 
+export default TransactionHistory;

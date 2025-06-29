@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,27 +9,40 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, Settings, Key, BarChart3, Cpu, Component } from "lucide-react";
+import {
+  ChevronDown,
+  Settings,
+  Key,
+  BarChart3,
+  Cpu,
+  Component,
+} from "lucide-react";
 
 const OperationsMenu = () => {
   const location = useLocation();
-  
+
   // 檢查當前路徑是否匹配
   const isActive = (path) => {
     return location.pathname === path;
   };
-  
+
   // 判斷是否在操作頁面
   const isInOperations = () => {
-    const operationPaths = ['/dashboard', '/exchange-keys', '/trading', '/components'];
+    const operationPaths = [
+      "/dashboard",
+      "/exchange-keys",
+      "/trading",
+      "/components",
+    ];
+
     return operationPaths.includes(location.pathname);
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button 
-          variant={isInOperations() ? "default" : "outline"} 
+        <Button
+          variant={isInOperations() ? "default" : "outline"}
           className="flex items-center gap-1"
         >
           <Settings className="w-4 h-4 mr-1" />
@@ -41,26 +54,34 @@ const OperationsMenu = () => {
         <DropdownMenuLabel>操作選項</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <Link to="/dashboard">
-          <DropdownMenuItem className={`cursor-pointer ${isActive('/dashboard') ? 'bg-accent' : ''}`}>
+          <DropdownMenuItem
+            className={`cursor-pointer ${isActive("/dashboard") ? "bg-accent" : ""}`}
+          >
             <Settings className="w-4 h-4 mr-2" />
             <span>操作中心首頁</span>
           </DropdownMenuItem>
         </Link>
         <Link to="/exchange-keys">
-          <DropdownMenuItem className={`cursor-pointer ${isActive('/exchange-keys') ? 'bg-accent' : ''}`}>
+          <DropdownMenuItem
+            className={`cursor-pointer ${isActive("/exchange-keys") ? "bg-accent" : ""}`}
+          >
             <Key className="w-4 h-4 mr-2" />
             <span>API 密鑰管理</span>
           </DropdownMenuItem>
         </Link>
         <Link to="/trading">
-          <DropdownMenuItem className={`cursor-pointer ${isActive('/trading') ? 'bg-accent' : ''}`}>
+          <DropdownMenuItem
+            className={`cursor-pointer ${isActive("/trading") ? "bg-accent" : ""}`}
+          >
             <BarChart3 className="w-4 h-4 mr-2" />
             <span>交易操作</span>
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
         <Link to="/components">
-          <DropdownMenuItem className={`cursor-pointer ${isActive('/components') ? 'bg-accent' : ''}`}>
+          <DropdownMenuItem
+            className={`cursor-pointer ${isActive("/components") ? "bg-accent" : ""}`}
+          >
             <Component className="w-4 h-4 mr-2" />
             <span>組件庫</span>
           </DropdownMenuItem>
@@ -70,4 +91,4 @@ const OperationsMenu = () => {
   );
 };
 
-export default OperationsMenu; 
+export default OperationsMenu;

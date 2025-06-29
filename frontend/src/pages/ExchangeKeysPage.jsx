@@ -1,10 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Tabs, 
-  TabsContent, 
-  TabsList, 
-  TabsTrigger 
-} from "@/components/ui/tabs";
+import React, { useState, useEffect } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
   TableBody,
@@ -17,8 +12,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import ExchangeKeyForm from '@/components/ExchangeKeyForm';
-import axios from 'axios';
+import ExchangeKeyForm from "@/components/ExchangeKeyForm";
+import axios from "axios";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -43,7 +38,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { MoreHorizontal, RefreshCw, Wifi, WifiOff } from 'lucide-react';
+import { MoreHorizontal, RefreshCw, Wifi, WifiOff } from "lucide-react";
 
 const ExchangeKeysPage = () => {
   const [keys, setKeys] = useState([]);
@@ -59,14 +54,16 @@ const ExchangeKeysPage = () => {
   const fetchKeys = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('http://localhost:8000/api/exchange/keys');
+      const response = await axios.get(
+        "http://localhost:8000/api/exchange/keys",
+      );
       setKeys(response.data);
       // 獲取每個密鑰的連線狀態
-      response.data.forEach(key => {
+      response.data.forEach((key) => {
         fetchConnectionStatus(key.id);
       });
     } catch (error) {
-      console.error('獲取 API 密鑰失敗:', error);
+      console.error("獲取 API 密鑰失敗:", error);
       toast({
         title: "錯誤",
         description: "獲取 API 密鑰列表失敗",
@@ -79,31 +76,33 @@ const ExchangeKeysPage = () => {
 
   // 獲取連線狀態
   const fetchConnectionStatus = async (keyId) => {
-    setIsStatusLoading(prev => ({ ...prev, [keyId]: true }));
+    setIsStatusLoading((prev) => ({ ...prev, [keyId]: true }));
     try {
-      const response = await axios.get(`http://localhost:8000/api/exchange/keys/${keyId}/connection-status`);
-      setConnectionStatus(prev => ({ 
-        ...prev, 
-        [keyId]: response.data 
+      const response = await axios.get(
+        `http://localhost:8000/api/exchange/keys/${keyId}/connection-status`,
+      );
+      setConnectionStatus((prev) => ({
+        ...prev,
+        [keyId]: response.data,
       }));
     } catch (error) {
       console.error(`獲取連線狀態失敗 (ID: ${keyId}):`, error);
     } finally {
-      setIsStatusLoading(prev => ({ ...prev, [keyId]: false }));
+      setIsStatusLoading((prev) => ({ ...prev, [keyId]: false }));
     }
   };
 
   // 初始加載
   useEffect(() => {
     fetchKeys();
-    
+
     // 每 30 秒刷新一次連線狀態
     const intervalId = setInterval(() => {
-      keys.forEach(key => {
+      keys.forEach((key) => {
         fetchConnectionStatus(key.id);
       });
     }, 30000);
-    
+
     return () => clearInterval(intervalId);
   }, []);
 
@@ -115,7 +114,9 @@ const ExchangeKeysPage = () => {
   // 切換密鑰狀態
   const toggleKeyStatus = async (keyId) => {
     try {
-      await axios.post(`http://localhost:8000/api/exchange/keys/${keyId}/toggle`);
+      await axios.post(
+        `http://localhost:8000/api/exchange/keys/${keyId}/toggle`,
+      );
       toast({
         title: "成功",
         description: "已更新 API 密鑰狀態",
@@ -124,7 +125,7 @@ const ExchangeKeysPage = () => {
       // 更新連線狀態
       setTimeout(() => fetchConnectionStatus(keyId), 1000);
     } catch (error) {
-      console.error('更新 API 密鑰狀態失敗:', error);
+      console.error("更新 API 密鑰狀態失敗:", error);
       toast({
         title: "錯誤",
         description: "更新 API 密鑰狀態失敗",
@@ -136,16 +137,18 @@ const ExchangeKeysPage = () => {
   // 刪除密鑰
   const deleteKey = async () => {
     if (!selectedKeyId) return;
-    
+
     try {
-      await axios.delete(`http://localhost:8000/api/exchange/keys/${selectedKeyId}`);
+      await axios.delete(
+        `http://localhost:8000/api/exchange/keys/${selectedKeyId}`,
+      );
       toast({
         title: "成功",
         description: "已刪除 API 密鑰",
       });
       fetchKeys();
     } catch (error) {
-      console.error('刪除 API 密鑰失敗:', error);
+      console.error("刪除 API 密鑰失敗:", error);
       toast({
         title: "錯誤",
         description: "刪除 API 密鑰失敗",
@@ -159,9 +162,11 @@ const ExchangeKeysPage = () => {
 
   // 預熱連線
   const preheatConnection = async (keyId) => {
-    setPreheatLoading(prev => ({ ...prev, [keyId]: true }));
+    setPreheatLoading((prev) => ({ ...prev, [keyId]: true }));
     try {
-      await axios.post(`http://localhost:8000/api/exchange/keys/${keyId}/preheat`);
+      await axios.post(
+        `http://localhost:8000/api/exchange/keys/${keyId}/preheat`,
+      );
       toast({
         title: "成功",
         description: "交易所連線預熱成功",
@@ -169,45 +174,45 @@ const ExchangeKeysPage = () => {
       // 更新連線狀態
       setTimeout(() => fetchConnectionStatus(keyId), 1000);
     } catch (error) {
-      console.error('預熱連線失敗:', error);
+      console.error("預熱連線失敗:", error);
       toast({
         title: "錯誤",
         description: "預熱連線失敗",
         variant: "destructive",
       });
     } finally {
-      setPreheatLoading(prev => ({ ...prev, [keyId]: false }));
+      setPreheatLoading((prev) => ({ ...prev, [keyId]: false }));
     }
   };
 
   // 預熱所有連線
   const preheatAllConnections = async () => {
-    setPreheatLoading(prev => ({ ...prev, all: true }));
+    setPreheatLoading((prev) => ({ ...prev, all: true }));
     try {
-      await axios.post('http://localhost:8000/api/exchange/preheat-all');
+      await axios.post("http://localhost:8000/api/exchange/preheat-all");
       toast({
         title: "成功",
         description: "所有交易所連線預熱成功",
       });
       // 更新所有連線狀態
-      keys.forEach(key => {
+      keys.forEach((key) => {
         setTimeout(() => fetchConnectionStatus(key.id), 1000);
       });
     } catch (error) {
-      console.error('預熱所有連線失敗:', error);
+      console.error("預熱所有連線失敗:", error);
       toast({
         title: "錯誤",
         description: "預熱所有連線失敗",
         variant: "destructive",
       });
     } finally {
-      setPreheatLoading(prev => ({ ...prev, all: false }));
+      setPreheatLoading((prev) => ({ ...prev, all: false }));
     }
   };
 
   // 格式化最後使用時間
   const formatLastUsed = (timestamp) => {
-    if (!timestamp) return '未知';
+    if (!timestamp) return "未知";
     const date = new Date(timestamp * 1000);
     return date.toLocaleString();
   };
@@ -215,21 +220,21 @@ const ExchangeKeysPage = () => {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-6">交易所 API 密鑰管理</h1>
-      
+
       <Tabs defaultValue="list" className="w-full">
         <TabsList className="grid w-full max-w-md grid-cols-2">
           <TabsTrigger value="list">已保存的密鑰</TabsTrigger>
           <TabsTrigger value="add">新增密鑰</TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="list" className="mt-6">
           {isLoading ? (
             <div className="text-center py-8">載入中...</div>
           ) : keys.length > 0 ? (
             <>
               <div className="flex justify-end mb-4">
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={preheatAllConnections}
                   disabled={isPreheatLoading.all}
                 >
@@ -291,22 +296,24 @@ const ExchangeKeysPage = () => {
                               </div>
                             </TooltipTrigger>
                             <TooltipContent>
-                              {connectionStatus[key.id]?.connected 
+                              {connectionStatus[key.id]?.connected
                                 ? `已連線，最後活動: ${formatLastUsed(connectionStatus[key.id]?.last_used)}`
-                                : '未連線'}
+                                : "未連線"}
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end items-center space-x-2">
-                          <Button 
-                            variant="outline" 
+                          <Button
+                            variant="outline"
                             size="icon"
                             onClick={() => preheatConnection(key.id)}
                             disabled={isPreheatLoading[key.id]}
                           >
-                            <RefreshCw className={`h-4 w-4 ${isPreheatLoading[key.id] ? 'animate-spin' : ''}`} />
+                            <RefreshCw
+                              className={`h-4 w-4 ${isPreheatLoading[key.id] ? "animate-spin" : ""}`}
+                            />
                           </Button>
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -315,19 +322,27 @@ const ExchangeKeysPage = () => {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                              <DropdownMenuLabel>API 密鑰操作</DropdownMenuLabel>
+                              <DropdownMenuLabel>
+                                API 密鑰操作
+                              </DropdownMenuLabel>
                               <DropdownMenuSeparator />
-                              <DropdownMenuItem onClick={() => toggleKeyStatus(key.id)}>
+                              <DropdownMenuItem
+                                onClick={() => toggleKeyStatus(key.id)}
+                              >
                                 {key.is_active ? "禁用密鑰" : "啟用密鑰"}
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => preheatConnection(key.id)}>
+                              <DropdownMenuItem
+                                onClick={() => preheatConnection(key.id)}
+                              >
                                 預熱連線
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => fetchConnectionStatus(key.id)}>
+                              <DropdownMenuItem
+                                onClick={() => fetchConnectionStatus(key.id)}
+                              >
                                 刷新連線狀態
                               </DropdownMenuItem>
                               <DropdownMenuSeparator />
-                              <DropdownMenuItem 
+                              <DropdownMenuItem
                                 onClick={() => {
                                   setSelectedKeyId(key.id);
                                   setDeleteDialogOpen(true);
@@ -348,8 +363,8 @@ const ExchangeKeysPage = () => {
           ) : (
             <div className="text-center py-8">
               <p className="text-muted-foreground">尚未添加任何 API 密鑰</p>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="mt-4"
                 onClick={() => document.querySelector('[value="add"]').click()}
               >
@@ -358,7 +373,7 @@ const ExchangeKeysPage = () => {
             </div>
           )}
         </TabsContent>
-        
+
         <TabsContent value="add" className="mt-6">
           <div className="flex justify-center">
             <ExchangeKeyForm onSuccess={handleKeyAdded} />
@@ -377,7 +392,10 @@ const ExchangeKeysPage = () => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>取消</AlertDialogCancel>
-            <AlertDialogAction onClick={deleteKey} className="bg-red-600 hover:bg-red-700">
+            <AlertDialogAction
+              onClick={deleteKey}
+              className="bg-red-600 hover:bg-red-700"
+            >
               刪除
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -387,4 +405,4 @@ const ExchangeKeysPage = () => {
   );
 };
 
-export default ExchangeKeysPage; 
+export default ExchangeKeysPage;

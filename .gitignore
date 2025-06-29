@@ -74,4 +74,7 @@ coverage/
 .nyc_output/
 
 # 舊版資源
-logo_square_package/ 
+logo_square_package/
+
+# Rust 相關檔案
+Rust-order/ 

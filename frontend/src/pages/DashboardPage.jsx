@@ -1,7 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { TechCard } from "@/components/ui/tech-card";
 import DataFlow from "@/components/ui/data-flow";
 import { Logo } from "@/components/ui/logo";
@@ -18,7 +24,8 @@ const DashboardPage = () => {
             </h1>
           </div>
           <p className="max-w-[700px] text-gray-500 dark:text-gray-400 mb-8">
-            歡迎使用 SABIT 操作中心，您可以在這裡管理交易所 API 密鑰、設置交易策略、執行自動化交易等操作。
+            歡迎使用 SABIT 操作中心，您可以在這裡管理交易所 API
+            密鑰、設置交易策略、執行自動化交易等操作。
           </p>
         </div>
       </section>
@@ -26,7 +33,7 @@ const DashboardPage = () => {
       <section className="py-6 md:py-10 w-full">
         <div className="w-full px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-3 lg:gap-12">
-            <div className="animate-scale-in" style={{ animationDelay: '0ms' }}>
+            <div className="animate-scale-in" style={{ animationDelay: "0ms" }}>
               <TechCard>
                 <CardHeader>
                   <CardTitle className="flex items-center">
@@ -45,13 +52,18 @@ const DashboardPage = () => {
                 </CardContent>
                 <CardFooter>
                   <Link to="/exchange-keys" className="w-full">
-                    <Button variant="default" className="w-full">進入管理</Button>
+                    <Button variant="default" className="w-full">
+                      進入管理
+                    </Button>
                   </Link>
                 </CardFooter>
               </TechCard>
             </div>
-            
-            <div className="animate-scale-in" style={{ animationDelay: '100ms' }}>
+
+            <div
+              className="animate-scale-in"
+              style={{ animationDelay: "100ms" }}
+            >
               <TechCard>
                 <CardHeader>
                   <CardTitle className="flex items-center">
@@ -70,13 +82,18 @@ const DashboardPage = () => {
                 </CardContent>
                 <CardFooter>
                   <Link to="/trading" className="w-full">
-                    <Button variant="default" className="w-full">進入策略</Button>
+                    <Button variant="default" className="w-full">
+                      進入策略
+                    </Button>
                   </Link>
                 </CardFooter>
               </TechCard>
             </div>
-            
-            <div className="animate-scale-in" style={{ animationDelay: '200ms' }}>
+
+            <div
+              className="animate-scale-in"
+              style={{ animationDelay: "200ms" }}
+            >
               <TechCard>
                 <CardHeader>
                   <CardTitle className="flex items-center">
@@ -95,7 +112,9 @@ const DashboardPage = () => {
                 </CardContent>
                 <CardFooter>
                   <Link to="/trading" className="w-full">
-                    <Button variant="default" className="w-full">進入交易</Button>
+                    <Button variant="default" className="w-full">
+                      進入交易
+                    </Button>
                   </Link>
                 </CardFooter>
               </TechCard>
@@ -107,9 +126,14 @@ const DashboardPage = () => {
       <section className="py-6 md:py-10 w-full">
         <div className="w-full px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
-            <div className="space-y-4 animate-scale-in" style={{ animationDelay: '300ms' }}>
+            <div
+              className="space-y-4 animate-scale-in"
+              style={{ animationDelay: "300ms" }}
+            >
               <h2 className="text-2xl font-bold tracking-tighter flex items-center">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-cyan-400">系統狀態</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-cyan-400">
+                  系統狀態
+                </span>
                 <div className="w-3 h-3 rounded-full bg-blue-500 ml-2 animate-pulse"></div>
               </h2>
               <div className="relative h-40 mb-4">
@@ -136,9 +160,14 @@ const DashboardPage = () => {
                 </div>
               </div>
             </div>
-            <div className="space-y-4 animate-scale-in" style={{ animationDelay: '400ms' }}>
+            <div
+              className="space-y-4 animate-scale-in"
+              style={{ animationDelay: "400ms" }}
+            >
               <h2 className="text-2xl font-bold tracking-tighter flex items-center">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-400">最近交易</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-400">
+                  最近交易
+                </span>
                 <div className="w-3 h-3 rounded-full bg-purple-500 ml-2 animate-pulse"></div>
               </h2>
               <div className="relative h-40 mb-4">
@@ -168,4 +197,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage; 
+export default DashboardPage;

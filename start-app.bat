@@ -1,4 +1,6 @@
 @echo off
+setlocal enabledelayedexpansion
+
 :: 設定命令提示字元使用 UTF-8 編碼
 chcp 65001 > nul
 :: 移除顏色設定，使用系統預設顏色
@@ -20,35 +22,9 @@ echo    FastAPI + React 本地多核心應用系統 - 啟動工具
 echo ========================================================
 echo.
 
-:: 顯示動畫
-echo  正在初始化系統...
-ping -n 1 127.0.0.1 > nul
-echo  [##                  ] 10%%
-ping -n 1 127.0.0.1 > nul
-echo  [####                ] 20%%
-ping -n 1 127.0.0.1 > nul
-echo  [######              ] 30%%
-ping -n 1 127.0.0.1 > nul
-echo  [########            ] 40%%
-ping -n 1 127.0.0.1 > nul
-echo  [##########          ] 50%%
-ping -n 1 127.0.0.1 > nul
-echo  [############        ] 60%%
-ping -n 1 127.0.0.1 > nul
-echo  [##############      ] 70%%
-ping -n 1 127.0.0.1 > nul
-echo  [################    ] 80%%
-ping -n 1 127.0.0.1 > nul
-echo  [##################  ] 90%%
-ping -n 1 127.0.0.1 > nul
-echo  [####################] 100%%
-echo.
-echo  系統初始化完成！
-echo.
-
 :: 設置工作目錄
-set WORKSPACE=%~dp0
-cd %WORKSPACE%
+set "WORKSPACE=%~dp0"
+cd /d "%WORKSPACE%"
 
 :: 顯示系統資訊
 echo  [系統資訊]
@@ -66,64 +42,58 @@ echo.
 echo  [檢查依賴]
 echo  --------------------------------------------------------
 echo  檢查 Python...
-python --version || (
+python --version 2>nul || (
     echo  錯誤: Python 未安裝或不在 PATH 中
     goto :error
 )
 
 echo  檢查 Node.js...
-node --version || (
+node --version 2>nul || (
     echo  錯誤: Node.js 未安裝或不在 PATH 中
     goto :error
 )
 echo  --------------------------------------------------------
 echo.
 
+:: 確認目錄存在
+if not exist "backend" (
+    echo  錯誤: 找不到 backend 目錄
+    goto :error
+)
+
+if not exist "frontend" (
+    echo  錯誤: 找不到 frontend 目錄
+    goto :error
+)
+
 :: 啟動後端
 echo  [啟動後端] FastAPI 服務...
 echo  --------------------------------------------------------
-start cmd /k "title SABIT 後端服務 && cd backend && echo 正在啟動後端服務... && python -m uvicorn main:app --reload --port 8000"
+start cmd /c "chcp 65001 > nul && title SABIT 後端服務 && cd /d "%WORKSPACE%backend" && echo 正在啟動後端服務... && python -m uvicorn main:app --reload --port 8000"
 
 :: 等待後端啟動
 echo  等待後端啟動中...
-echo  [          ] 0%%
-timeout /t 1 /nobreak > nul
-echo  [##        ] 20%%
-timeout /t 1 /nobreak > nul
-echo  [####      ] 40%%
-timeout /t 1 /nobreak > nul
-echo  [######    ] 60%%
-timeout /t 1 /nobreak > nul
-echo  [########  ] 80%%
-timeout /t 1 /nobreak > nul
-echo  [##########] 100%%
+echo  [####################] 處理中...
+timeout /t 5 /nobreak > nul
 echo  後端啟動完成！
 echo.
 
 :: 啟動前端
 echo  [啟動前端] React 應用...
 echo  --------------------------------------------------------
-start cmd /k "title SABIT 前端應用 && cd frontend && echo 正在啟動前端應用... && npm run dev"
+start cmd /c "chcp 65001 > nul && title SABIT 前端應用 && cd /d "%WORKSPACE%frontend" && echo 正在啟動前端應用... && npm run dev"
 
 :: 等待前端啟動
 echo  等待前端啟動中...
-echo  [          ] 0%%
-timeout /t 2 /nobreak > nul
-echo  [##        ] 20%%
-timeout /t 2 /nobreak > nul
-echo  [####      ] 40%%
-timeout /t 2 /nobreak > nul
-echo  [######    ] 60%%
-timeout /t 1 /nobreak > nul
-echo  [########  ] 80%%
-timeout /t 1 /nobreak > nul
-echo  [##########] 100%%
+echo  [####################] 處理中...
+timeout /t 8 /nobreak > nul
 echo  前端啟動完成！
 echo.
 
 :: 打開瀏覽器
 echo  [打開瀏覽器] 訪問應用...
 echo  --------------------------------------------------------
+timeout /t 2 /nobreak > nul
 start http://localhost:5173
 
 echo.
@@ -136,17 +106,13 @@ echo  --------------------------------------------------------
 echo.
 echo  提示: 關閉此窗口不會停止應用，需要手動關閉前後端命令視窗
 echo.
-echo  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█
-echo  █  按任意鍵退出此啟動器  █
-echo  █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█
+echo  按任意鍵退出此啟動器
 pause > nul
 exit /b 0
 
 :error
 echo.
-echo  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█
-echo  █  啟動失敗，請檢查錯誤信息  █
-echo  █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█
+echo  啟動失敗，請檢查錯誤信息
 echo.
 pause
 exit /b 1 

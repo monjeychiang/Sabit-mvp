@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-const Typewriter = ({ 
-  text, 
-  delay = 50, 
-  className = '', 
-  cursorClassName = '', 
+const Typewriter = ({
+  text,
+  delay = 50,
+  className = "",
+  cursorClassName = "",
   showCursor = true,
-  onComplete = () => {} 
+  onComplete = () => {},
 }) => {
-  const [displayedText, setDisplayedText] = useState('');
+  const [displayedText, setDisplayedText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     if (currentIndex < text.length) {
       const timeout = setTimeout(() => {
-        setDisplayedText(prev => prev + text[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
+        setDisplayedText((prev) => prev + text[currentIndex]);
+        setCurrentIndex((prev) => prev + 1);
       }, delay);
-      
+
       return () => clearTimeout(timeout);
     } else if (!isComplete) {
       setIsComplete(true);
@@ -30,9 +30,9 @@ const Typewriter = ({
     <span className={className}>
       {displayedText}
       {showCursor && (
-        <span 
+        <span
           className={`inline-block animate-blink ${cursorClassName}`}
-          style={{ animationDuration: '1s' }}
+          style={{ animationDuration: "1s" }}
         >
           |
         </span>
@@ -41,4 +41,4 @@ const Typewriter = ({
   );
 };
 
-export { Typewriter }; 
+export { Typewriter };

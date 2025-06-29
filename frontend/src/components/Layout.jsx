@@ -1,18 +1,18 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { ThemeToggle } from './theme-toggle';
-import { GitHubStars } from './github-stars';
-import { Logo } from './ui/logo';
-import { MainNavigation } from './main-navigation';
-import { MobileNavigation } from './mobile-navigation';
-import { LoginButton } from './login-button';
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ThemeToggle } from "./theme-toggle";
+import { GitHubStars } from "./github-stars";
+import { Logo } from "./ui/logo";
+import { MainNavigation } from "./main-navigation";
+import { MobileNavigation } from "./mobile-navigation";
+import { LoginButton } from "./login-button";
 
 // 導入頁腳 API 狀態指示器
-import { ApiStatusFooter } from './ui/api-status-footer';
+import { ApiStatusFooter } from "./ui/api-status-footer";
 
 const Layout = ({ children }) => {
   const location = useLocation();
-  
+
   // 檢查當前路徑是否匹配
   const isActive = (path) => {
     return location.pathname === path;
@@ -26,8 +26,8 @@ const Layout = ({ children }) => {
             <div className="flex items-center">
               <MobileNavigation />
               <Link to="/" className="flex items-center">
-                <Logo 
-                  size="medium" 
+                <Logo
+                  size="medium"
                   textClassName="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400"
                 />
               </Link>
@@ -38,16 +38,15 @@ const Layout = ({ children }) => {
             <div className="flex items-center space-x-4">
               <LoginButton />
               <GitHubStars username="monjeychiang" repo="Sabit-mvp" />
+
               <ThemeToggle />
             </div>
           </div>
         </div>
       </header>
-      
-      <main className="flex-grow w-full">
-        {children}
-      </main>
-      
+
+      <main className="flex-grow w-full">{children}</main>
+
       <footer className="bg-background border-t py-6 w-full">
         <div className="w-full mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
@@ -63,7 +62,7 @@ const Layout = ({ children }) => {
                   本地運行 · 安全可靠 · 高效交易
                 </span>
               </div>
-              
+
               {/* 頁腳狀態指示器 */}
               <div className="mt-2">
                 <ApiStatusFooter />
@@ -76,4 +75,4 @@ const Layout = ({ children }) => {
   );
 };
 
-export default Layout; 
+export default Layout;

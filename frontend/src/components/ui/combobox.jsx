@@ -56,7 +56,7 @@ export function Combobox({
       <PopoverContent className="w-full min-w-[320px] p-0">
         <div className="max-h-[500px] overflow-y-auto">
           <div className="flex items-center border-b px-3">
-            <input 
+            <input
               type="text"
               placeholder={placeholder}
               value={inputValue}
@@ -67,9 +67,7 @@ export function Combobox({
           </div>
           <div className="p-1">
             {items.length === 0 && (
-              <div className="py-6 text-center text-sm">
-                {emptyMessage}
-              </div>
+              <div className="py-6 text-center text-sm">{emptyMessage}</div>
             )}
             <div className="overflow-hidden p-1">
               {items.map((item) => (
@@ -87,9 +85,10 @@ export function Combobox({
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === item.value ? "opacity-100" : "opacity-0"
+                      value === item.value ? "opacity-100" : "opacity-0",
                     )}
                   />
+
                   {item.label}
                 </div>
               ))}
@@ -99,4 +98,4 @@ export function Combobox({
       </PopoverContent>
     </Popover>
   );
-} 
+}

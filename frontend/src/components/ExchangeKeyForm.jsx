@@ -1,37 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
+import React, { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
-import { 
-  Form, 
-  FormControl, 
-  FormDescription, 
-  FormField, 
-  FormItem, 
-  FormLabel, 
-  FormMessage 
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import axios from 'axios';
-import logger from '@/utils/logger';
+import axios from "axios";
+import logger from "@/utils/logger";
 
 // 表單驗證架構
 const formSchema = z.object({
@@ -49,7 +49,8 @@ const ExchangeKeyForm = ({ onSuccess }) => {
   const { toast } = useToast();
 
   // 取得 API base url（從 .env 設定，預設為 http://localhost:8000）
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+  const API_BASE_URL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 
   // 初始化表單
   const form = useForm({
@@ -68,10 +69,12 @@ const ExchangeKeyForm = ({ onSuccess }) => {
   useEffect(() => {
     const fetchExchanges = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/exchange/supported`);
+        const response = await axios.get(
+          `${API_BASE_URL}/api/exchange/supported`,
+        );
         setExchanges(response.data.exchanges || []);
       } catch (error) {
-        logger.error('獲取交易所列表失敗:', error);
+        logger.error("獲取交易所列表失敗:", error);
         toast({
           title: "錯誤",
           description: "無法獲取支持的交易所列表",
@@ -87,21 +90,24 @@ const ExchangeKeyForm = ({ onSuccess }) => {
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/exchange/keys`, data);
+      const response = await axios.post(
+        `${API_BASE_URL}/api/exchange/keys`,
+        data,
+      );
       toast({
         title: "成功",
         description: "交易所 API 密鑰已保存",
       });
-      
+
       // 重置表單
       form.reset();
-      
+
       // 調用成功回調
       if (onSuccess) {
         onSuccess(response.data);
       }
     } catch (error) {
-      logger.error('保存 API 密鑰失敗:', error);
+      logger.error("保存 API 密鑰失敗:", error);
       toast({
         title: "錯誤",
         description: error.response?.data?.detail || "保存 API 密鑰失敗",
@@ -130,8 +136,8 @@ const ExchangeKeyForm = ({ onSuccess }) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>交易所</FormLabel>
-                    <Select 
-                      onValueChange={field.onChange} 
+                    <Select
+                      onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
@@ -182,9 +188,7 @@ const ExchangeKeyForm = ({ onSuccess }) => {
                   <FormControl>
                     <Input type="password" placeholder="API Key" {...field} />
                   </FormControl>
-                  <FormDescription>
-                    從交易所獲取的 API Key
-                  </FormDescription>
+                  <FormDescription>從交易所獲取的 API Key</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -197,11 +201,13 @@ const ExchangeKeyForm = ({ onSuccess }) => {
                 <FormItem>
                   <FormLabel>API Secret</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="API Secret" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="API Secret"
+                      {...field}
+                    />
                   </FormControl>
-                  <FormDescription>
-                    從交易所獲取的 API Secret
-                  </FormDescription>
+                  <FormDescription>從交易所獲取的 API Secret</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -260,4 +266,4 @@ const ExchangeKeyForm = ({ onSuccess }) => {
   );
 };
 
-export default ExchangeKeyForm; 
+export default ExchangeKeyForm;

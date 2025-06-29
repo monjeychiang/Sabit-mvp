@@ -1,6 +1,6 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { createContext, useState, useContext, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
 // 創建上下文
@@ -17,8 +17,8 @@ export function AuthProvider({ children }) {
   // 初始化時檢查用戶是否已登入
   useEffect(() => {
     const checkAuth = async () => {
-      const token = localStorage.getItem('auth_token');
-      const storedUser = localStorage.getItem('user');
+      const token = localStorage.getItem("auth_token");
+      const storedUser = localStorage.getItem("user");
 
       if (token && storedUser) {
         try {
@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
           const userData = JSON.parse(storedUser);
           setUser(userData);
           setIsAuthenticated(true);
-          
+
           // 可選：驗證令牌的有效性
           // 對於簡單的本地應用，我們可以跳過這一步
           /*
@@ -40,11 +40,11 @@ export function AuthProvider({ children }) {
           }
           */
         } catch (error) {
-          console.error('解析用戶數據出錯:', error);
+          console.error("解析用戶數據出錯:", error);
           logout();
         }
       }
-      
+
       setIsLoading(false);
     };
 
@@ -54,21 +54,21 @@ export function AuthProvider({ children }) {
   // 登出函數
   const logout = () => {
     // 清除本地存儲
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('user');
-    
+    localStorage.removeItem("auth_token");
+    localStorage.removeItem("user");
+
     // 更新狀態
     setUser(null);
     setIsAuthenticated(false);
-    
+
     // 顯示提示
     toast({
       title: "已登出",
       description: "您已成功登出系統",
     });
-    
+
     // 跳轉到首頁
-    navigate('/');
+    navigate("/");
   };
 
   // 上下文值
@@ -81,8 +81,8 @@ export function AuthProvider({ children }) {
     updateUser: (userData) => {
       setUser(userData);
       setIsAuthenticated(true);
-      localStorage.setItem('user', JSON.stringify(userData));
-    }
+      localStorage.setItem("user", JSON.stringify(userData));
+    },
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
@@ -92,7 +92,7 @@ export function AuthProvider({ children }) {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === null) {
-    throw new Error('useAuth 必須在 AuthProvider 內部使用');
+    throw new Error("useAuth 必須在 AuthProvider 內部使用");
   }
   return context;
-}; 
+};
